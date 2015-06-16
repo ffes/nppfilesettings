@@ -57,7 +57,7 @@ static char* GetLine(int linenumber)
 	if (len == 0)
 		return NULL;
 
-	// Allocate enough space to store the first line
+	// Allocate enough space to store the line
 	char* szLine = new char[len + 10];
 
 	if (szLine != NULL)
@@ -108,6 +108,42 @@ static void ParseFirstLine()
 	}
 
 	delete[] szText;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+
+static void ParseVimModeline(const char* szLine)
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+
+static void SearchEditorModeline()
+{
+	int lines = SendMsg(SCI_GETLINECOUNT) - 1;
+	if (lines <= 0)
+		return;
+
+	bool found = false;
+	int fivesLinesAbove = (lines > 5 ? lines - 5 : 0);
+	for (int i = lines; !found && i >= fivesLinesAbove; i--)
+	{
+		// Get the first line of the file
+		char* szLine = GetLine(i);
+		if (szLine != NULL)
+		{
+			// Is it a VIM modeline?
+			if (strstr(szLine, " vi:") != NULL || strstr(szLine, " vim:") || strstr(szLine, " ex:"))
+			{
+				ParseVimModeline(szLine);
+				found = true;
+			}
+
+			delete[] szLine;
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,6 +207,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 		case NPPN_FILEOPENED:
 		{
 			ParseFirstLine();
+			SearchEditorModeline();
 			break;
 		}
 	}
