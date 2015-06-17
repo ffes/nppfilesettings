@@ -1,33 +1,46 @@
 NppFileMagic
 ============
 
-NppFileMagic is plugin for Notepad++ that is inspired by file(1) and libmagic(3)
+NppFileMagic is plugin for Notepad++ for someone who works on cross platform projects that is inspired by file(1) and libmagic(3)
 It tries to determine the file type of a file when it is opened and set the language type.
+It also tries to recognize VIM modelines and adjust settings for that file accordingly.
 
-Currently supported:
-SheBang (#!)
-- bash
-- php
-- python
-- perl
-- ruby
-XML
+Currently supported
+-------------------
 
-Planned:
+**Set syntax highlighting base on information found in the first line of a file**
 
-Support for VIM modelines. When ts/tabstop is set in a vim modeline, use those settings for that document.
+* [SheBang](https://en.wikipedia.org/wiki/Shebang_%28Unix%29) (`#!`)
+	- bash
+	- php
+	- python
+	- perl
+	- ruby
+* XML
 
+**Support for [VIM modelines](http://vim.wikia.com/wiki/Modeline_magic)**
 
-File based language type recognition:
+* `ts`: set the tab width
 
-First hard-coded, later configurable
-Makefile.in			(Make)
-.gitconfig			(INI)
-.git/config			(INI)
-.bashrc				(bash)
-.bash_profile		(bash)
-.bash_logout		(bash)
+Planned
+-------
 
+* Support more VIM modelines items
+
+* Support the modeline concept found in [Emacs](http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html) and [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/).
+
+* File based language type recognition:
+
+	First hard-coded, later configurable
+	`Makefile.in`		(Make)
+	`.gitconfig`		(INI)
+	`.git/config`		(INI)
+	`.bashrc`			(bash)
+	`.bash_profile`		(bash)
+	`.bash_logout`		(bash)
+
+Status
+------
 
 The current status of this plugin is just a proof of concept. It only works for the first file opened.
-Plugin messages are being processed in a strange way. When the message NPPN_FILEOPENED is fired the message NPPM_GETFULLCURRENTPATH does not return the name of the new file because after the NPPN_FILEOPENED the focus is still on the previous tab (and thus previous file).
+Notepad++ processes plugin messages in a strange way. When the message NPPN_FILEOPENED is fired the message NPPM_GETFULLCURRENTPATH does not return the name of the new file because after the NPPN_FILEOPENED the focus is still on the previous tab (and thus previous file).
