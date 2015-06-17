@@ -31,10 +31,6 @@
 #include "NppFileMagic.h"
 #include "DlgAbout.h"
 
-#ifdef _MSC_VER
-#pragma comment(lib, "comctl32.lib")
-#endif
-
 static const int nbFunc = 3;
 static const TCHAR PLUGIN_NAME[] = L"FileMagic";
 
@@ -53,7 +49,7 @@ static char* GetLine(int linenumber)
 		return NULL;
 
 	// Get the length of the requested line
-	int len = SendMsg(SCI_LINELENGTH);
+	int len = SendMsg(SCI_LINELENGTH, linenumber);
 	if (len == 0)
 		return NULL;
 
@@ -115,6 +111,15 @@ static void ParseFirstLine()
 
 static void ParseVimModeline(const char* szLine)
 {
+	const char* pos = strstr(szLine, "ts=");
+	if (pos != NULL)
+	{
+		int tabstop;
+		if (sscanf(pos + 3, "%d", &tabstop) == 1)
+		{
+			SendMsg(SCI_SETTABWIDTH, tabstop);
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -135,7 +140,7 @@ static void SearchEditorModeline()
 		if (szLine != NULL)
 		{
 			// Is it a VIM modeline?
-			if (strstr(szLine, " vi:") != NULL || strstr(szLine, " vim:") || strstr(szLine, " ex:"))
+			if (strstr(szLine, " vi:") != NULL || strstr(szLine, " vim:") != NULL || strstr(szLine, " ex:") != NULL)
 			{
 				ParseVimModeline(szLine);
 				found = true;
