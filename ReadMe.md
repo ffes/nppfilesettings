@@ -25,19 +25,27 @@ Currently supported
 Planned
 -------
 
-* Support more VIM modelines items
+* Support more VIM modelines items, if possible
+	- `tabstop` (set the tab width)
+	- `expandtab`, `et` (tab key produces tab)
+	- `noexpandtab`, `noet` (tab key produces spaces)
+	- `wrap` (wrap lines)
+	- `nowrap` (don't wrap lines)
+	- `textwidth`, `tw` (at what line does the text wrap)
+	- `filetype`, `ft`, `syntax`, `syn`
 
 * Support the modeline concept found in [Emacs](http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html) and [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/).
 
 * File based language type recognition:
 
 	First hard-coded, later configurable
-	`Makefile.in`		(Make)
-	`.gitconfig`		(INI)
-	`.git/config`		(INI)
-	`.bashrc`			(bash)
-	`.bash_profile`		(bash)
-	`.bash_logout`		(bash)
+
+	- `Makefile.in`		(Make)
+	- `.gitconfig`		(INI)
+	- `.git/config`		(INI)
+	- `.bashrc`			(bash)
+	- `.bash_profile`	(bash)
+	- `.bash_logout`	(bash)
 
 Status
 ------
