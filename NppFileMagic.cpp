@@ -96,10 +96,6 @@ static void ParseFirstLine()
 	}
 	else if (strncmp(szText, "<?xml", 5) == 0)
 	{
-		WCHAR path[_MAX_PATH];
-		SendMessage(g_nppData._nppHandle, NPPM_GETFULLCURRENTPATH, 0, (LPARAM) path);
-		MsgBox(path);
-
 		SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_XML);
 	}
 
