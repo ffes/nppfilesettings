@@ -209,7 +209,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 			break;
 		}
 
-		case NPPN_FILEOPENED:
+		case NPPN_BUFFERACTIVATED:
 		{
 			ParseFirstLine();
 			SearchEditorModeline();
