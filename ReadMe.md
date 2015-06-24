@@ -34,6 +34,9 @@ Planned
 	- `textwidth`, `tw` (at what line does the text wrap)
 	- `filetype`, `ft`, `syntax`, `syn`
 
+Wish List
+---------
+
 * Support the modeline concept found in [Emacs](http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html) and [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/).
 
 * File based language type recognition:
@@ -46,6 +49,8 @@ Planned
 	- `.bashrc`			(bash)
 	- `.bash_profile`	(bash)
 	- `.bash_logout`	(bash)
+
+* Modeline Generator to add a modeline to the current file.
 
 Status
 ------
