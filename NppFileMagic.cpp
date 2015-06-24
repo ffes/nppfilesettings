@@ -31,7 +31,7 @@
 #include "NppFileMagic.h"
 #include "DlgAbout.h"
 
-static const int nbFunc = 3;
+static const int nbFunc = 1;
 static const TCHAR PLUGIN_NAME[] = L"FileMagic";
 
 HINSTANCE g_hInst;
@@ -340,6 +340,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved)
 
 			// The most important menu entry
 			int index = 0;
+/*
 			s_funcItem[index]._pFunc = NULL;
 			wcscpy(s_funcItem[index]._itemName, PLUGIN_NAME);
 			s_funcItem[index]._init2Check = false;
@@ -352,7 +353,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved)
 			s_funcItem[index]._init2Check = false;
 			s_funcItem[index]._pShKey = NULL;
 			index++;
-
+*/
 			// Show About Dialog
 			s_funcItem[index]._pFunc = ShowAboutDlg;
 			wcscpy(s_funcItem[index]._itemName, L"About...");
