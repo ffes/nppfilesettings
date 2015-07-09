@@ -19,8 +19,7 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef __NPPFILEMAGIC_H__
-#define __NPPFILEMAGIC_H__
+#pragma once
 
 #include <string>
 #include <map>
@@ -43,5 +42,3 @@ extern NppData g_nppData;
 #ifdef _MSC_VER
 #define snprintf _snprintf
 #endif
-
-#endif // __NPPFILEMAGIC_H__

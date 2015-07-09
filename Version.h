@@ -19,8 +19,7 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#pragma once
 
 #define VERSION_NUMBER        0,7,0,0
 #define VERSION_NUMBER_STR   "0.7.0"
@@ -46,5 +45,3 @@ public:
 private:
 	BYTE _version[VERSION_DIGITS];
 };
-
-#endif // __VERSION_H__
