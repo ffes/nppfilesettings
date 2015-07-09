@@ -21,7 +21,7 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <commctrl.h>
 
 #include "NPP/PluginInterface.h"
@@ -56,7 +56,7 @@ static BOOL OnInitDialog(HWND hDlg)
 	CenterWindow(hDlg);
 
 	// Show the relevant part of the changelog
-	wstring txt;
+	std::wstring txt;
 	WCHAR szTmp[_MAX_PATH];
 	for (int i = 0; i < s_showTill; i++)
 	{

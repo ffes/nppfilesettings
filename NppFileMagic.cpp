@@ -21,12 +21,10 @@
 
 #include <windows.h>
 #include <assert.h>
-#include <commctrl.h>
 #include <stdio.h>
 #include <stdarg.h>
 
 #include "NPP/PluginInterface.h"
-#include "NPP/menuCmdID.h"
 #include "Resource.h"
 #include "NppFileMagic.h"
 #include "DlgAbout.h"

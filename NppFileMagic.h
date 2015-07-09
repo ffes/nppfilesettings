@@ -21,10 +21,6 @@
 
 #pragma once
 
-#include <string>
-#include <map>
-using namespace std;
-
 extern HWND getCurrentHScintilla(int which);
 extern LRESULT SendMsg(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0, int count = 1);
 extern void Ansi2Unicode(LPWSTR wszStr, LPCSTR szStr, int iSize);
@@ -37,7 +33,6 @@ extern WCHAR* GetDlgText(HWND hDlg, UINT uID);
 
 extern HINSTANCE g_hInst;
 extern NppData g_nppData;
-//extern FuncItem g_funcItem[];
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
