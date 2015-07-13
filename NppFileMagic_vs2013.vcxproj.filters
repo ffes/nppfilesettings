@@ -18,18 +18,18 @@
     <ClCompile Include="DlgAbout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NppModeLine.cpp">
+    <ClCompile Include="Version.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Version.cpp">
+    <ClCompile Include="NppFileMagic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSettingsVim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DlgAbout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NppModeLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -38,9 +38,15 @@
     <ClInclude Include="Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NppFileMagic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSettingsVim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="NppModeLine_res.rc">
+    <ResourceCompile Include="NppFileMagic_res.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

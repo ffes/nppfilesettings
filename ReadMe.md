@@ -20,15 +20,14 @@ Currently supported
 
 **Support for [VIM modelines](http://vim.wikia.com/wiki/Modeline_magic)**
 
-* `ts`: set the tab width
+- `tabstop`, `ts`: set the tab width
+- `expandtab`, `et`: tab key produces spaces
+- `noexpandtab`, `noet` tab key produces tabs
 
 Planned
 -------
 
 * Support more VIM modelines items, if possible
-	- `tabstop` (set the tab width)
-	- `expandtab`, `et` (tab key produces tab)
-	- `noexpandtab`, `noet` (tab key produces spaces)
 	- `wrap` (wrap lines)
 	- `nowrap` (don't wrap lines)
 	- `textwidth`, `tw` (at what line does the text wrap)
@@ -50,15 +49,10 @@ Wish List
 	- `.bash_profile`	(bash)
 	- `.bash_logout`	(bash)
 
-* Modeline Generator to add a modeline to the current file.
+* Modeline Generator to add a modeline to the current file or edit the existing one.
 
 Known Bugs
 ----------
 
 * This plug-in could cause unexpected results if you use it together with the [EditorConfig](http://editorconfig.org/) plug-in. There is no way to tell the order in which plug-ins are notified of a buffer activation. Therefore when both plug-ins are used, a `.editorconfig` file exists and sets tabs and a VIM modeline with tab settings is opened, it depends on the order the are found in the `Plugins` menu of Notepad++ which plug-in does its thing first. I don't know if this is fixable without a change to the plug-in system of Notepad++.
-* Every time a file is activated (like when switching from tabs), it will set the language and tabs settings, not just the first time a file is opened of or when a file is saved.
-
-Status
-------
-
-The current status of this plug-in is a proof of concept. A better modeline parser needs to be written first before releasing the first version.
+* Every time a file is activated (like when switching from tabs), it will set the language and tabs settings, not just when the file is opened or saved.

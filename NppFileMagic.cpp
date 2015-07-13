@@ -28,6 +28,7 @@
 #include "Resource.h"
 #include "NppFileMagic.h"
 #include "DlgAbout.h"
+#include "FileSettingsVim.h"
 
 static const int nbFunc = 1;
 static const TCHAR PLUGIN_NAME[] = L"FileMagic";
@@ -101,25 +102,9 @@ static void ParseFirstLine()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-//
+// Search in the file for the various file settings for the various editors
 
-static void ParseVimModeline(const char* szLine)
-{
-	const char* pos = strstr(szLine, "ts=");
-	if (pos != NULL)
-	{
-		int tabstop;
-		if (sscanf(pos + 3, "%d", &tabstop) == 1)
-		{
-			SendMsg(SCI_SETTABWIDTH, tabstop);
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-//
-
-static void SearchEditorModeline()
+static void SearchEditorFileSettings()
 {
 	int lines = SendMsg(SCI_GETLINECOUNT) - 1;
 	if (lines <= 0)
@@ -129,16 +114,13 @@ static void SearchEditorModeline()
 	int fivesLinesAbove = (lines > 5 ? lines - 5 : 0);
 	for (int i = lines; !found && i >= fivesLinesAbove; i--)
 	{
-		// Get the first line of the file
+		// Get the line of the file
 		char* szLine = GetLine(i);
 		if (szLine != NULL)
 		{
-			// Is it a VIM modeline?
-			if (strstr(szLine, " vi:") != NULL || strstr(szLine, " vim:") != NULL || strstr(szLine, " ex:") != NULL)
-			{
-				ParseVimModeline(szLine);
+			FileSettingsVim vim(szLine);
+			if (vim.Parse())
 				found = true;
-			}
 
 			delete[] szLine;
 		}
@@ -206,7 +188,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 		case NPPN_BUFFERACTIVATED:
 		{
 			ParseFirstLine();
-			SearchEditorModeline();
+			SearchEditorFileSettings();
 			break;
 		}
 	}

@@ -95,17 +95,19 @@
       <ProgramDatabaseFile>$(OutDir)NppFileMagic.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)NppFileMagic.lib</ImportLibrary>
-	  <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DlgAbout.cpp" />
+    <ClCompile Include="FileSettingsVim.cpp" />
     <ClCompile Include="NppFileMagic.cpp" />
     <ClCompile Include="Version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DlgAbout.h" />
+    <ClInclude Include="FileSettingsVim.h" />
     <ClInclude Include="NppFileMagic.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Version.h" />
