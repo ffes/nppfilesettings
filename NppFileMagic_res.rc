@@ -71,7 +71,7 @@ BEGIN
 	LTEXT			"License:",IDC_STATIC,30,53,43,8
 	LTEXT			"GPL-2",IDC_STATIC,75,53,43,8
 	LTEXT			"Site:",IDC_STATIC,30,68,27,8
-	CONTROL			"<a href=""http://www.fesevur.com/filemagic"">http://www.fesevur.com/filemagic</a>",IDC_SYSLINK,"SysLink",NOT WS_TABSTOP,75,68,130,8
+	CONTROL			"<a href=""http://www.fesevur.com/nppfilemagic"">http://www.fesevur.com/nppfilemagic</a>",IDC_SYSLINK,"SysLink",NOT WS_TABSTOP,75,68,130,8
 	EDITTEXT		IDC_CHANGELOG,29,83,175,76,ES_MULTILINE | ES_AUTOVSCROLL | NOT ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL | NOT WS_TABSTOP
 	PUSHBUTTON		"Close",IDCANCEL,86,167,50,14
 END
