@@ -43,7 +43,7 @@ struct VersionInfo
 
 static VersionInfo s_info[MAX_VERSION_INFO] =
 {
-	{	{0,7,0,0},	{2012, 8, 1},	L"Initial release" }
+	{	{1,0,0,0},	{2015, 9, 23},	L"Initial release" }
 };
 
 static int s_showTill = MAX_VERSION_INFO;
