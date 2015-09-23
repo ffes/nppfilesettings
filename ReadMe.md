@@ -31,7 +31,7 @@ Planned
 	- `wrap` (wrap lines)
 	- `nowrap` (don't wrap lines)
 	- `textwidth`, `tw` (at what line does the text wrap)
-	- `filetype`, `ft`, `syntax`, `syn` (specify the language used in the source file)
+	- `filetype`, `ft`, `syntax`, `syn` (specify the syntax highlighting used for the file)
 
 Wish List
 ---------
@@ -54,5 +54,5 @@ Wish List
 Known Bugs
 ----------
 
-* This plug-in could cause unexpected results if you use it together with the [EditorConfig](http://editorconfig.org/) plug-in. There is no way to tell the order in which plug-ins are notified of a buffer activation. Therefore when both plug-ins are used, a `.editorconfig` file exists and sets tabs and a VIM modeline with tab settings is opened, it depends on the order the are found in the `Plugins` menu of Notepad++ which plug-in does its thing first. I don't know if this is fixable without a change to the plug-in system of Notepad++.
-* Every time a file is activated (like when switching from tabs), it will set the language and tabs settings, not just when the file is opened or saved.
+* This plug-in could cause unexpected results if you use it together with the [EditorConfig](http://editorconfig.org/) plug-in. When both plug-ins are installed and a `.editorconfig` file exists and sets tabs and a VIM modeline with tab settings is opened, it depends on the order the are found in the `Plugins` menu of Notepad++ which plug-in does its thing first. To fix this these two plugins need to become aware of each other most likely with the message `NPPM_MSGTOPLUGIN`.
+* Every time a file is activated (like when switching tabs), the plug-in will do its thing, not just when the file is opened. When a file is saved the plug-in is not actived (yet).
