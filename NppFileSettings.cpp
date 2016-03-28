@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppFileMagic - file(1) and libmagic(3) inspired plugin for Notepad++   //
-//  Copyright (c) 2015 Frank Fesevur                                       //
+//  NppFileSettings                                                        //
+//  Copyright (c) 2015-2016 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -26,12 +26,12 @@
 
 #include "NPP/PluginInterface.h"
 #include "Resource.h"
-#include "NppFileMagic.h"
+#include "NppFileSettings.h"
 #include "DlgAbout.h"
 #include "FileSettingsVim.h"
 
 static const int nbFunc = 1;
-static const TCHAR PLUGIN_NAME[] = L"FileMagic";
+static const TCHAR PLUGIN_NAME[] = L"FileSettings";
 
 HINSTANCE g_hInst;
 NppData g_nppData;
@@ -195,7 +195,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Here you can process the Npp Messages 
+// Here you can process the Npp Messages
 // I will make the messages accessible little by little, according to the
 // need of plugin development.
 // Please let me know if you need to access to some messages :

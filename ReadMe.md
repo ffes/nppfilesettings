@@ -1,58 +1,83 @@
-NppFileMagic
-============
+NppFileSettings
+===============
 
-NppFileMagic is plug-in for Notepad++ for someone who works on cross platform projects that is inspired by file(1) and libmagic(3).
-It tries to determine the file type of a file when it is opened and set the language type.
-It also tries to recognize VIM modelines and adjust settings for that file accordingly.
+NppFileSettings is plug-in for [Notepad++](https://notepad-plus-plus.org/)
+that tries to recognize VIM modelines and adjust settings for that file accordingly.
+
 
 Currently supported
 -------------------
 
-**Set syntax highlighting base on information found in the first line of a file**
-
-* [SheBang](https://en.wikipedia.org/wiki/Shebang_%28Unix%29) (`#!`)
-	- bash
-	- php
-	- python
-	- perl
-	- ruby
-* XML
-
 **Support for [VIM modelines](http://vim.wikia.com/wiki/Modeline_magic)**
 
-- `tabstop`, `ts`: set the tab width
+- `tabstop`, `ts`: set the width of tabstops
 - `expandtab`, `et`: tab key produces spaces
-- `noexpandtab`, `noet` tab key produces tabs
+- `noexpandtab`, `noet`: tab key produces tabs
+
 
 Planned
 -------
 
 * Support more VIM modelines items, if possible
-	- `wrap` (wrap lines)
-	- `nowrap` (don't wrap lines)
-	- `textwidth`, `tw` (at what line does the text wrap)
-	- `filetype`, `ft`, `syntax`, `syn` (specify the syntax highlighting used for the file)
+  - `wrap` (wrap lines)
+  - `nowrap` (don't wrap lines)
+  - `textwidth`, `tw` (at what line does the text wrap, default to `SCI_GETEDGECOLUMN`)
+  - `filetype`, `ft`, `syntax`, `syn` (specify the syntax highlighting used for the file)
+  - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
+  - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
+
+The `wrap` items need some work. This is a global setting in Notepad++ and
+it needs to be preserved when switching between files.
+
 
 Wish List
 ---------
 
-* Support the modeline concept found in [Emacs](http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html) and [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/) and maybe other editors as well.
+* Support the modeline concept found in
+  - [Emacs](http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html)
+  - [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/)
+  - [Sublime Text](https://github.com/SublimeText/Modelines)
+  - [jEdit](http://www.jedit.org/users-guide/buffer-local.html)
+  - Probably other editors as well
 
-* File based language type recognition:
+* Make the code more generic, so parsers for other editors should be easy
+  to implement.
 
-	First hard-coded, later configurable
+* Modeline Generator to add a modeline, compatible with your editor of choice,
+  to the current file or edit the existing one.
 
-	- `Makefile.in`		(Make)
-	- `.gitconfig`		(INI)
-	- `.git/config`		(INI)
-	- `.bashrc`			(bash)
-	- `.bash_profile`	(bash)
-	- `.bash_logout`	(bash)
+* Support for [.kateconfig files](http://kate-editor.org/2006/02/09/kateconfig-files/)
+  and maybe for similar concepts by other editors.
 
-* Modeline Generator to add a modeline to the current file or edit the existing one.
+I have no intention to create yet another modeline variant especially for
+Notepad++. There are already too many of them.
+
 
 Known Bugs
 ----------
 
-* This plug-in could cause unexpected results if you use it together with the [EditorConfig](http://editorconfig.org/) plug-in. When both plug-ins are installed and a `.editorconfig` file exists and sets tabs and a VIM modeline with tab settings is opened, it depends on the order the are found in the `Plugins` menu of Notepad++ which plug-in does its thing first. To fix this these two plugins need to become aware of each other most likely with the message `NPPM_MSGTOPLUGIN`.
-* Every time a file is activated (like when switching tabs), the plug-in will do its thing, not just when the file is opened. When a file is saved the plug-in is not actived (yet).
+* This plug-in could cause unexpected results if you use it together with
+  the [EditorConfig](http://editorconfig.org/) plug-in. When both plug-ins
+  are installed and a `.editorconfig` file exists and sets tabs and a VIM
+  modeline with tab settings is opened, it depends on the order the are
+  found in the `Plugins` menu of Notepad++ which plug-in does its thing
+  first. To fix this these two plugins need to become aware of each other
+  most likely with the message `NPPM_MSGTOPLUGIN`. EditorConfig should be
+  applied first (global) and the modeline after that (local).
+
+* Every time a file is activated (like when switching tabs), the plug-in
+  will do its thing, not just when the file is opened. When a file is saved
+  the plug-in is not actived (yet).
+
+* The modeline parser is very basic. The fact that this plug-in recognizes
+  something doesn't mean it is valid for `vim`. So when you add a modeline
+  be sure to check its syntax with the real thing.
+
+
+History
+-------
+
+This plug-in used to be called NppFileMagic. But since Notepad++ v6.8.4 it
+recognizes many languages by itself. The detection was not that great, so
+I contributed and now that part of the plugin was not needed anymore.
+Therefore I decided to remove that code and rename to plug-in.

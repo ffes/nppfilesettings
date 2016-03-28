@@ -21,7 +21,7 @@
     <ClCompile Include="Version.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NppFileMagic.cpp">
+    <ClCompile Include="NppFileSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileSettingsVim.cpp">
@@ -38,7 +38,7 @@
     <ClInclude Include="Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NppFileMagic.h">
+    <ClInclude Include="NppFileSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileSettingsVim.h">
@@ -46,7 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="NppFileMagic_res.rc">
+    <ResourceCompile Include="NppFileSettings_res.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

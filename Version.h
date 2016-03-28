@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppFileMagic - file(1) and libmagic(3) inspired plugin for Notepad++   //
-//  Copyright (c) 2015 Frank Fesevur                                       //
+//  NppFileSettings                                                        //
+//  Copyright (c) 2015-2016 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -24,7 +24,7 @@
 #define VERSION_NUMBER        1,0,0,0
 #define VERSION_NUMBER_STR   "1.0.0"
 #define VERSION_NUMBER_WSTR	L"1.0.0"
-#define COPYRIGHT_STR        "Copyright 2015 by Frank Fesevur"
+#define COPYRIGHT_STR        "Copyright 2015-2016 by Frank Fesevur"
 
 #define VERSION_DIGITS 4
 
