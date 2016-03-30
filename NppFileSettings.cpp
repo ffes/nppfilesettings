@@ -67,41 +67,6 @@ static char* GetLine(int linenumber)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-//
-
-static void ParseFirstLine()
-{
-	// Get the first line of the file
-	char* szText = GetLine(0);
-
-	// Is that line filled?
-	if (szText == NULL)
-		return;
-
-	// Does it contain a SheBang?
-	if (strncmp(szText, "#!/", 3) == 0)
-	{
-		// Try as many languages as possible
-		if (strstr(szText, "python") != NULL)
-			SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_PYTHON);
-		else if (strstr(szText, "perl") != NULL)
-			SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_PERL);
-		else if (strstr(szText, "php") != NULL)
-			SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_PHP);
-		else if (strstr(szText, "ruby") != NULL)
-			SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_RUBY);
-		else if (strstr(szText, "sh") != NULL)
-			SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_BASH);
-	}
-	else if (strncmp(szText, "<?xml", 5) == 0)
-	{
-		SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, L_XML);
-	}
-
-	delete[] szText;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // Search in the file for the various file settings for the various editors
 
 static void SearchEditorFileSettings()
@@ -187,7 +152,6 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 
 		case NPPN_BUFFERACTIVATED:
 		{
-			ParseFirstLine();
 			SearchEditorFileSettings();
 			break;
 		}
