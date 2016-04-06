@@ -13,6 +13,7 @@ Currently supported
 - `tabstop`, `ts`: set the width of tabstops
 - `expandtab`, `et`: tab key produces spaces
 - `noexpandtab`, `noet`: tab key produces tabs
+- `filetype`, `ft`, `syntax`, `syn`: specify the syntax highlighting used for the file
 
 
 Planned
@@ -22,7 +23,6 @@ Planned
   - `wrap` (wrap lines)
   - `nowrap` (don't wrap lines)
   - `textwidth`, `tw` (at what line does the text wrap, default to `SCI_GETEDGECOLUMN`)
-  - `filetype`, `ft`, `syntax`, `syn` (specify the syntax highlighting used for the file)
   - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
   - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
 

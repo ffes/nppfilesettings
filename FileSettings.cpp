@@ -19,23 +19,42 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <windows.h>
+#include <stdio.h>
+#include <string.h>
 
+#include "NPP/PluginInterface.h"
+#include "NppFileSettings.h"
 #include "FileSettings.h"
 
-class FileSettingsVim : public FileSettings
+/////////////////////////////////////////////////////////////////////////////
+//
+
+FileSettings::FileSettings()
 {
-public:
-	FileSettingsVim(const char* line);
+}
 
-	bool Parse();
+/////////////////////////////////////////////////////////////////////////////
+//
 
-private:
-	const char* _line;
+void FileSettings::SetTabStop(int tabstop)
+{
+	if (tabstop > 0)
+		SendMsg(SCI_SETTABWIDTH, tabstop);
+}
 
-	int FindIntWorker(const char* var);
-	int FindInt(const char* longvar, const char* shortvar);
-	bool FindBool(const char* longvar, const char* shortvar);
-	std::string FindStringWorker(const char* var);
-	std::string FindString(const char* longvar, const char* shortvar);
-};
+/////////////////////////////////////////////////////////////////////////////
+//
+
+void FileSettings::UseTabs(bool usetabs)
+{
+	SendMsg(SCI_SETUSETABS, usetabs ? 1 : 0);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+
+void FileSettings::SetLanguage(LangType lang)
+{
+	SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, lang);
+}

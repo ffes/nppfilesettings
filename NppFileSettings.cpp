@@ -23,6 +23,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <string>
 
 #include "NPP/PluginInterface.h"
 #include "Resource.h"

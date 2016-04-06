@@ -21,21 +21,13 @@
 
 #pragma once
 
-#include "FileSettings.h"
-
-class FileSettingsVim : public FileSettings
+class FileSettings
 {
 public:
-	FileSettingsVim(const char* line);
+	FileSettings();
 
-	bool Parse();
-
-private:
-	const char* _line;
-
-	int FindIntWorker(const char* var);
-	int FindInt(const char* longvar, const char* shortvar);
-	bool FindBool(const char* longvar, const char* shortvar);
-	std::string FindStringWorker(const char* var);
-	std::string FindString(const char* longvar, const char* shortvar);
+protected:
+	void SetTabStop(int tabstop);
+	void UseTabs(bool usetabs);
+	void SetLanguage(LangType lang);
 };

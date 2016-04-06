@@ -22,6 +22,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
+#include <string>
 
 #include "NPP/PluginInterface.h"
 #include "NppFileSettings.h"
@@ -30,9 +31,83 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 
-FileSettingsVim::FileSettingsVim(const char* line)
+FileSettingsVim::FileSettingsVim(const char* line) : FileSettings()
 {
 	_line = line;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Based on /usr/share/vim/vim74/syntax
+
+static LangType VimLangToNppLang(std::string lang)
+{
+	// Go through all the languages we know of
+	if (lang == "ada")				return L_ADA;
+	if (lang == "asm")				return L_ASM;
+	if (lang == "aspvbs")			return L_ASP;
+	//L_AU3,
+	if (lang == "sh")				return L_BASH;
+	if (lang == "dosbatch")			return L_BATCH;
+	if (lang == "c")				return L_C;
+	if (lang == "ocaml")			return L_CAML;
+	if (lang == "cmake")			return L_CMAKE;
+	if (lang == "cobol")			return L_COBOL;
+	//L_COFFEESCRIPT
+	if (lang == "cpp")				return L_CPP;
+	if (lang == "cs")				return L_CS;
+	if (lang == "css")				return L_CSS;
+	if (lang == "d")				return L_D;
+	if (lang == "diff")				return L_DIFF;
+	//L_FLASH
+	if (lang == "fortran")			return L_FORTRAN;
+	//L_FORTRAN_77
+	if (lang == "haskell")			return L_HASKELL;
+	if (lang == "html")				return L_HTML;
+	if (lang == "xhtml")			return L_HTML;
+	if (lang == "dosini")			return L_INI;
+	if (lang == "iss")				return L_INNO;
+	if (lang == "java")				return L_JAVA;
+	//L_JS
+	if (lang == "javascript")		return L_JAVASCRIPT;
+	//L_JSON
+	if (lang == "jsp")				return L_JSP;
+	if (lang == "kix")				return L_KIX;
+	if (lang == "lisp")				return L_LISP;
+	if (lang == "lua")				return L_LUA;
+	if (lang == "make")				return L_MAKEFILE;
+	if (lang == "matlab")			return L_MATLAB;
+	if (lang == "nsis")				return L_NSIS;
+	if (lang == "objc")				return L_OBJC;
+	if (lang == "pascal")			return L_PASCAL;
+	if (lang == "perl")				return L_PERL;
+	if (lang == "perl6")			return L_PERL;
+	if (lang == "php")				return L_PHP;
+	//L_POWERSHELL
+	if (lang == "postscr")			return L_PS;
+	if (lang == "python")			return L_PYTHON;
+	if (lang == "r")				return L_R;
+	if (lang == "rc")				return L_RC;
+	if (lang == "ruby")				return L_RUBY;
+	if (lang == "scheme")			return L_SCHEME;
+	if (lang == "st")				return L_SMALLTALK;
+	if (lang == "sql")				return L_SQL;
+	if (lang == "sqloracle")		return L_SQL;
+	if (lang == "tcl")				return L_TCL;
+	if (lang == "tex")				return L_TEX;
+	if (lang == "vb")				return L_VB;
+	if (lang == "basic")			return L_VB;
+	if (lang == "verilog")			return L_VERILOG;
+	if (lang == "vhdl")				return L_VHDL;
+	if (lang == "docbk")			return L_XML;
+	if (lang == "dtd")				return L_XML;
+	if (lang == "sgml")				return L_XML;
+	if (lang == "xml")				return L_XML;
+	if (lang == "xsd")				return L_XML;
+	if (lang == "xslt")				return L_XML;
+	if (lang == "yaml")				return L_YAML;
+
+	// (Yet) unrecognized language
+	return L_EXTERNAL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -82,6 +157,45 @@ bool FileSettingsVim::FindBool(const char* longvar, const char* shortvar)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+//
+
+std::string FileSettingsVim::FindStringWorker(const char* var)
+{
+	const char* pos = strstr(_line, var);
+	if (pos == NULL)
+		return "";
+
+	int len = strlen(var);
+	if (pos[len] != '=')
+		return "";
+	pos += len + 1;
+
+	std::string value;
+	while (*pos != 0)
+	{
+		if (isalnum(*pos))
+			value += *pos;
+		else
+			break;
+		pos++;
+	}
+
+	return value;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+
+std::string FileSettingsVim::FindString(const char* longvar, const char* shortvar)
+{
+	std::string value = FindStringWorker(longvar);
+	if (value != "")
+		return value;
+
+	return FindStringWorker(shortvar);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // *Very* basic implementation of a vim modeline parser
 
 bool FileSettingsVim::Parse()
@@ -91,15 +205,24 @@ bool FileSettingsVim::Parse()
 		return false;
 
 	// Search for tab stop settings
-	int tabstop = FindInt("tabstop", "ts");
-	if (tabstop > 0)
-		SendMsg(SCI_SETTABWIDTH, tabstop);
+	SetTabStop(FindInt("tabstop", "ts"));
 
 	// Search for tab expand settings
 	if (FindBool("noexpandtab", "noet"))
-		SendMsg(SCI_SETUSETABS, 1);
+		UseTabs(true);
 	else if (FindBool("expandtab", "et"))
-		SendMsg(SCI_SETUSETABS, 0);
+		UseTabs(false);
+
+	// Search for filetype and syntax to set the language for syntax highlighting
+	std::string langVIM = FindString("filetype", "ft");
+	if (langVIM == "")
+		langVIM = FindString("syntax", "syn");
+	if (langVIM != "")
+	{
+		LangType langNPP = VimLangToNppLang(langVIM);
+		if (langNPP != L_EXTERNAL)
+			SetLanguage(langNPP);
+	}
 
 	return true;
 }
