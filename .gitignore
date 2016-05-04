@@ -4,8 +4,10 @@ __*
 *.suo
 *.ncb
 *.user
+*.opendb
 *.opensdf
 *.sdf
+*.VC.db
 [Rr]elease/
 [Dd]ebug/
 tags.sqlite
