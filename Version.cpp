@@ -22,8 +22,6 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
-#include "NPP/PluginInterface.h"
-#include "NppFileSettings.h"
 #include "Version.h"
 
 /////////////////////////////////////////////////////////////////////////////
