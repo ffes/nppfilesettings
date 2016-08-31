@@ -45,7 +45,7 @@ static LangType VimLangToNppLang(std::string lang)
 	if (lang == "ada")				return L_ADA;
 	if (lang == "asm")				return L_ASM;
 	if (lang == "aspvbs")			return L_ASP;
-	//L_AU3,
+	//L_AU3
 	if (lang == "sh")				return L_BASH;
 	if (lang == "dosbatch")			return L_BATCH;
 	if (lang == "c")				return L_C;
