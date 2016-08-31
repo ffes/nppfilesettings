@@ -49,6 +49,8 @@ Wish List
 * Support for [.kateconfig files](http://kate-editor.org/2006/02/09/kateconfig-files/)
   and maybe for similar concepts by other editors.
 
+* Add a dialog to show which settings are active for the current document.
+
 I have no intention to create yet another modeline variant especially for
 Notepad++. There are already too many of them.
 
