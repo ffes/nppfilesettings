@@ -79,7 +79,9 @@ Known Bugs
 History
 -------
 
-This plug-in used to be called NppFileMagic. But since Notepad++ v6.8.4 it
-recognizes many languages by itself. The detection was not that great, so
-I contributed and now that part of the plugin was not needed anymore.
-Therefore I decided to remove that code and rename to plug-in.
+This plug-in used to be called NppFileMagic. It was also able to set the
+language of a file based on the first line of the file. But since v6.8.4 Notepad++
+recognizes many languages by itself by parsing the first line of a file. The
+detection was not that great, so I contributed some of my code and knowledge
+upstream and now that part of the plug-in was not needed anymore. Therefore I
+decided to remove that code and rename to plug-in.
