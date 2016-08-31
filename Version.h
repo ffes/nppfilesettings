@@ -26,6 +26,8 @@
 #define VERSION_NUMBER_WSTR	L"1.0.0"
 #define COPYRIGHT_STR        "Copyright 2015-2016 by Frank Fesevur"
 
+#include "version_git.h"
+
 #define VERSION_DIGITS 4
 
 class Version

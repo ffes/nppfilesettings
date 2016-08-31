@@ -46,7 +46,7 @@ BEGIN
 		BEGIN
 			VALUE	"CompanyName",			"Frank Fesevur"
 			VALUE	"FileDescription",		""
-			VALUE	"FileVersion",			VERSION_NUMBER_STR
+			VALUE	"FileVersion",			VERSION_GIT_STR
 			VALUE	"InternalName",			"NppFileSettings.dll"
 			VALUE	"LegalCopyright",		COPYRIGHT_STR
 			VALUE	"OriginalFilename",		"NppFileSettings.dll"
@@ -67,7 +67,7 @@ BEGIN
 	LTEXT			"Author:",IDC_STATIC,30,23,35,8
 	LTEXT			"Frank Fesevur",IDC_STATIC,75,23,74,8
 	LTEXT			"Version:",IDC_STATIC,30,38,31,8
-	LTEXT			VERSION_NUMBER_STR,IDC_STATIC,75,38,19,8
+	LTEXT			VERSION_GIT_STR,IDC_STATIC,75,38,120,8
 	LTEXT			"License:",IDC_STATIC,30,53,43,8
 	LTEXT			"GPL-2",IDC_STATIC,75,53,43,8
 	LTEXT			"Site:",IDC_STATIC,30,68,27,8

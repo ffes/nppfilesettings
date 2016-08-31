@@ -10,4 +10,5 @@ __*
 *.VC.db
 [Rr]elease/
 [Dd]ebug/
+version_git.h
 tags.sqlite
