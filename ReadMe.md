@@ -38,7 +38,7 @@ Wish List
   - [Kate Editor](http://kate-editor.org/2006/02/09/kate-modelines/)
   - [Sublime Text](https://github.com/SublimeText/Modelines)
   - [jEdit](http://www.jedit.org/users-guide/buffer-local.html)
-  - Probably other editors as well
+  - Maybe other editors as well
 
 * Make the code more generic, so parsers for other editors should be easy
   to implement.
@@ -55,8 +55,28 @@ I have no intention to create yet another modeline variant especially for
 Notepad++. There are already too many of them.
 
 
-Known Bugs
-----------
+Caveats
+-------
+
+* Every time a file is activated (like when switching tabs), the plug-in
+  will do its thing, not just when the file is opened. When a file is saved
+  the plug-in is not activated (yet).
+
+* The modeline parser is very basic. The fact that this plug-in recognizes
+  something doesn't mean it is valid for `vim`. So when you add a modeline
+  be sure to check its syntax with the real thing.
+
+* If your doesn't recognize the modelines, you probably need to enable it.
+  Add these lines to `~/.vimrc`:
+
+  ```vim
+  set modeline
+  set modelines=5
+  ```
+
+
+Known Issues
+------------
 
 * This plug-in could cause unexpected results if you use it together with
   the [EditorConfig](http://editorconfig.org/) plug-in. When both plug-ins
@@ -66,14 +86,6 @@ Known Bugs
   first. To fix this these two plugins need to become aware of each other
   most likely with the message `NPPM_MSGTOPLUGIN`. EditorConfig should be
   applied first (global) and the modeline after that (local).
-
-* Every time a file is activated (like when switching tabs), the plug-in
-  will do its thing, not just when the file is opened. When a file is saved
-  the plug-in is not actived (yet).
-
-* The modeline parser is very basic. The fact that this plug-in recognizes
-  something doesn't mean it is valid for `vim`. So when you add a modeline
-  be sure to check its syntax with the real thing.
 
 
 History
