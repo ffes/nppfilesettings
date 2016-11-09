@@ -66,7 +66,7 @@ Caveats
   something doesn't mean it is valid for `vim`. So when you add a modeline
   be sure to check its syntax with the real thing.
 
-* If your doesn't recognize the modelines, you probably need to enable it.
+* If your vim doesn't recognize the modelines, you probably need to enable it.
   Add these lines to `~/.vimrc`:
 
   ```vim
