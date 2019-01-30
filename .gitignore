@@ -1,14 +1,5 @@
-__*
-*.LNK
-*.lnk
-*.suo
-*.ncb
 *.user
-*.opendb
-*.opensdf
-*.sdf
-*.VC.db
+.vs/
 [Rr]elease/
 [Dd]ebug/
 version_git.h
-tags.sqlite
