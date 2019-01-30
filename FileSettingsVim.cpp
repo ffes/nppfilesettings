@@ -37,7 +37,7 @@ FileSettingsVim::FileSettingsVim(const char* line) : FileSettings()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Based on /usr/share/vim/vim74/syntax
+// Based on /usr/share/vim/vim80/syntax
 
 static LangType VimLangToNppLang(std::string lang)
 {
@@ -45,9 +45,13 @@ static LangType VimLangToNppLang(std::string lang)
 	if (lang == "ada")				return L_ADA;
 	if (lang == "asm")				return L_ASM;
 	if (lang == "aspvbs")			return L_ASP;
+	if (lang == "asn")				return L_ASN1;
 	//L_AU3
+	//L_AVS
+	if (lang == "baan")				return L_BAANC;
 	if (lang == "sh")				return L_BASH;
 	if (lang == "dosbatch")			return L_BATCH;
+	//L_BLITZBASIC
 	if (lang == "c")				return L_C;
 	if (lang == "ocaml")			return L_CAML;
 	if (lang == "cmake")			return L_CMAKE;
@@ -55,48 +59,69 @@ static LangType VimLangToNppLang(std::string lang)
 	//L_COFFEESCRIPT
 	if (lang == "cpp")				return L_CPP;
 	if (lang == "cs")				return L_CS;
+	//L_CSOUND
 	if (lang == "css")				return L_CSS;
 	if (lang == "d")				return L_D;
 	if (lang == "diff")				return L_DIFF;
+	if (lang == "erlang")			return L_ERLANG;
+	//L_ESCRIPT
 	//L_FLASH
+	if (lang == "forth")			return L_FORTH;
 	if (lang == "fortran")			return L_FORTRAN;
 	//L_FORTRAN_77
+	//L_FREEBASIC
 	if (lang == "haskell")			return L_HASKELL;
 	if (lang == "html")				return L_HTML;
 	if (lang == "xhtml")			return L_HTML;
+	//L_IHEX
 	if (lang == "dosini")			return L_INI;
 	if (lang == "iss")				return L_INNO;
 	if (lang == "java")				return L_JAVA;
 	//L_JS
 	if (lang == "javascript")		return L_JAVASCRIPT;
-	//L_JSON
+	if (lang == "json")				return L_JSON;
 	if (lang == "jsp")				return L_JSP;
 	if (lang == "kix")				return L_KIX;
+	//L_LATEX
 	if (lang == "lisp")				return L_LISP;
 	if (lang == "lua")				return L_LUA;
 	if (lang == "make")				return L_MAKEFILE;
 	if (lang == "matlab")			return L_MATLAB;
+	if (lang == "mmix")				return L_MMIXAL;
+	//L_NIMROD
+	if (lang == "crontab")			return L_NNCRONTAB;
 	if (lang == "nsis")				return L_NSIS;
 	if (lang == "objc")				return L_OBJC;
+	//L_OSCRIPT
 	if (lang == "pascal")			return L_PASCAL;
 	if (lang == "perl")				return L_PERL;
 	if (lang == "perl6")			return L_PERL;
 	if (lang == "php")				return L_PHP;
 	//L_POWERSHELL
 	if (lang == "postscr")			return L_PS;
+	//L_PUREBASIC
 	if (lang == "python")			return L_PYTHON;
 	if (lang == "r")				return L_R;
 	if (lang == "rc")				return L_RC;
+	if (lang == "rebol")			return L_REBOL;
+	if (lang == "registry")			return L_REGISTRY;
 	if (lang == "ruby")				return L_RUBY;
+	if (lang == "rust")				return L_RUST;
 	if (lang == "scheme")			return L_SCHEME;
 	if (lang == "st")				return L_SMALLTALK;
+	if (lang == "spice")			return L_SPICE;
 	if (lang == "sql")				return L_SQL;
 	if (lang == "sqloracle")		return L_SQL;
+	if (lang == "srec")				return L_SREC;
+	//L_SWIFT
 	if (lang == "tcl")				return L_TCL;
+	//L_TEHEX
 	if (lang == "tex")				return L_TEX;
+	//L_TXT2TAGS
 	if (lang == "vb")				return L_VB;
 	if (lang == "basic")			return L_VB;
 	if (lang == "verilog")			return L_VERILOG;
+	if (lang == "prolog")			return L_VISUALPROLOG;
 	if (lang == "vhdl")				return L_VHDL;
 	if (lang == "docbk")			return L_XML;
 	if (lang == "dtd")				return L_XML;
