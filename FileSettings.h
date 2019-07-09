@@ -27,7 +27,7 @@ public:
 	FileSettings();
 
 protected:
-	void SetTabStop(int tabstop);
-	void UseTabs(bool usetabs);
+	void SetTabWidth(int width);
+	void SetUseTabs(bool usetabs);
 	void SetLanguage(LangType lang);
 };

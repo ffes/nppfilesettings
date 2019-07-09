@@ -37,16 +37,16 @@ FileSettings::FileSettings()
 /////////////////////////////////////////////////////////////////////////////
 //
 
-void FileSettings::SetTabStop(int tabstop)
+void FileSettings::SetTabWidth(int width)
 {
-	if (tabstop > 0)
-		SendMsg(SCI_SETTABWIDTH, tabstop);
+	if (width > 0)
+		SendMsg(SCI_SETTABWIDTH, width);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 //
 
-void FileSettings::UseTabs(bool usetabs)
+void FileSettings::SetUseTabs(bool usetabs)
 {
 	SendMsg(SCI_SETUSETABS, usetabs ? 1 : 0);
 }

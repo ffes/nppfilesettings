@@ -230,13 +230,13 @@ bool FileSettingsVim::Parse()
 		return false;
 
 	// Search for tab stop settings
-	SetTabStop(FindInt("tabstop", "ts"));
+	SetTabWidth(FindInt("tabstop", "ts"));
 
 	// Search for tab expand settings
 	if (FindBool("noexpandtab", "noet"))
-		UseTabs(true);
+		SetUseTabs(true);
 	else if (FindBool("expandtab", "et"))
-		UseTabs(false);
+		SetUseTabs(false);
 
 	// Search for filetype and syntax to set the language for syntax highlighting
 	std::string langVIM = FindString("filetype", "ft");
