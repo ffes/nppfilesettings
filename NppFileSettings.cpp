@@ -277,8 +277,8 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved)
 {
 	UNREFERENCED_PARAMETER(lpReserved);
 
-    switch (reasonForCall)
-    {
+	switch (reasonForCall)
+	{
 		case DLL_PROCESS_ATTACH:
 		{
 			g_hInst = (HINSTANCE) hModule;
@@ -329,6 +329,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved)
 
 		case DLL_THREAD_DETACH:
 			break;
-    }
-    return TRUE;
+	}
+	return TRUE;
 }
