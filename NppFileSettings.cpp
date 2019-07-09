@@ -215,7 +215,7 @@ void MsgBoxf(const char* szFmt, ...)
 	char szTmp[1024];
 	va_list argp;
 	va_start(argp, szFmt);
-	vsprintf(szTmp, szFmt, argp);
+	vsprintf_s(szTmp, szFmt, argp);
 	va_end(argp);
 	MsgBox(szTmp);
 }
@@ -301,7 +301,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved)
 */
 			// Show About Dialog
 			s_funcItem[index]._pFunc = ShowAboutDlg;
-			wcscpy(s_funcItem[index]._itemName, L"About...");
+			wcscpy_s(s_funcItem[index]._itemName, L"About...");
 			s_funcItem[index]._init2Check = false;
 			s_funcItem[index]._pShKey = NULL;
 			index++;

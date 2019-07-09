@@ -149,7 +149,7 @@ int FileSettingsVim::FindIntWorker(const char* var)
 		return 0;
 
 	int value;
-	if (sscanf(pos + len + 1, "%d", &value) == 1)
+	if (sscanf_s(pos + len + 1, "%d", &value) == 1)
 		return value;
 
 	return 0;
