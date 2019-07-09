@@ -189,35 +189,12 @@ void Ansi2Unicode(LPWSTR wszStr, LPCSTR szStr, int iSize)
 /////////////////////////////////////////////////////////////////////////////
 // Easy access to the MessageBox functions
 
-void MsgBox(const WCHAR* msg)
-{
-	::MessageBox(g_nppData._nppHandle, msg, PLUGIN_NAME, MB_OK);
-}
-
 void MsgBox(const char* msg)
 {
 	TCHAR* tmp = (TCHAR*) malloc(sizeof(TCHAR) * (strlen(msg) + 2));
 	Ansi2Unicode(tmp, msg, (int) strlen(msg) + 1);
 	::MessageBox(g_nppData._nppHandle, tmp, PLUGIN_NAME, MB_OK);
 	free(tmp);
-}
-
-bool MsgBoxYesNo(const WCHAR* msg)
-{
-	return (MessageBox(g_nppData._nppHandle, msg, PLUGIN_NAME, MB_YESNO) == IDYES);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// MessageBox function with printf
-
-void MsgBoxf(const char* szFmt, ...)
-{
-	char szTmp[1024];
-	va_list argp;
-	va_start(argp, szFmt);
-	vsprintf_s(szTmp, szFmt, argp);
-	va_end(argp);
-	MsgBox(szTmp);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -255,19 +232,6 @@ void CenterWindow(HWND hDlg)
 	int y = center.y - ((dlgRect.bottom - dlgRect.top) / 2);
 
 	SetWindowPos(hDlg, HWND_TOP, x, y, -1, -1, SWP_NOSIZE | SWP_SHOWWINDOW);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-//
-
-WCHAR* GetDlgText(HWND hDlg, UINT uID)
-{
-	int maxBufferSize = GetWindowTextLength(GetDlgItem(hDlg, uID)) + 3;
-	WCHAR* buffer = new WCHAR[maxBufferSize];
-	ZeroMemory(buffer, maxBufferSize);
-
-	GetDlgItemText(hDlg, uID, buffer, maxBufferSize);
-	return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
