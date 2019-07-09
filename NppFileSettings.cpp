@@ -44,12 +44,12 @@ static FuncItem s_funcItem[nbFunc];
 static char* GetLine(int linenumber)
 {
 	// Get the number of lines
-	int lines = SendMsg(SCI_GETLINECOUNT);
+	int lines = (int) SendMsg(SCI_GETLINECOUNT);
 	if (linenumber > lines)
 		return NULL;
 
 	// Get the length of the requested line
-	int len = SendMsg(SCI_LINELENGTH, linenumber);
+	int len = (int) SendMsg(SCI_LINELENGTH, linenumber);
 	if (len == 0)
 		return NULL;
 
@@ -72,7 +72,7 @@ static char* GetLine(int linenumber)
 
 static void SearchEditorFileSettings()
 {
-	int lines = SendMsg(SCI_GETLINECOUNT) - 1;
+	int lines = (int) SendMsg(SCI_GETLINECOUNT) - 1;
 	if (lines <= 0)
 		return;
 
