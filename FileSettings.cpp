@@ -28,7 +28,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 
-FileSettings::FileSettings()
+FileSettings::FileSettings() noexcept
 {
 }
 
@@ -52,7 +52,7 @@ void FileSettings::SetUseTabs(bool usetabs)
 /////////////////////////////////////////////////////////////////////////////
 //
 
-void FileSettings::SetLanguage(LangType lang)
+void FileSettings::SetLanguage(LangType lang) noexcept
 {
 	SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, lang);
 }

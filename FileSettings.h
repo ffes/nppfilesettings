@@ -24,10 +24,10 @@
 class FileSettings
 {
 public:
-	FileSettings();
+	FileSettings() noexcept;
 
 protected:
 	void SetTabWidth(int width);
 	void SetUseTabs(bool usetabs);
-	void SetLanguage(LangType lang);
+	void SetLanguage(LangType lang) noexcept;
 };
