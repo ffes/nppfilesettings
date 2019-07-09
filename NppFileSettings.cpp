@@ -214,22 +214,22 @@ LRESULT SendMsg(UINT Msg, WPARAM wParam, LPARAM lParam, int count)
 /////////////////////////////////////////////////////////////////////////////
 // Make the window center, relative the NPP-window
 
-void CenterWindow(HWND hDlg)
+void CenterWindow(HWND hDlg) noexcept
 {
 	RECT rc;
 	GetClientRect(g_nppData._nppHandle, &rc);
+	const int w = rc.right - rc.left;
+	const int h = rc.bottom - rc.top;
 
 	POINT center;
-	int w = rc.right - rc.left;
-	int h = rc.bottom - rc.top;
 	center.x = rc.left + (w / 2);
 	center.y = rc.top + (h / 2);
 	ClientToScreen(g_nppData._nppHandle, &center);
 
 	RECT dlgRect;
 	GetClientRect(hDlg, &dlgRect);
-	int x = center.x - ((dlgRect.right - dlgRect.left) / 2);
-	int y = center.y - ((dlgRect.bottom - dlgRect.top) / 2);
+	const int x = center.x - ((dlgRect.right - dlgRect.left) / 2);
+	const int y = center.y - ((dlgRect.bottom - dlgRect.top) / 2);
 
 	SetWindowPos(hDlg, HWND_TOP, x, y, -1, -1, SWP_NOSIZE | SWP_SHOWWINDOW);
 }
