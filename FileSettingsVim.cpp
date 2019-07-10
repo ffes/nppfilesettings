@@ -159,11 +159,12 @@ bool FileSettingsVim::FindInt(const std::string longvar, const std::string short
 	smatch m;
 	if (regex_search(_line, m, re))
 	{
-		// There should be two values
-		if (m.size() == 2)
+		// There should be three values, in [0] is the whole match
+		// In the following items are the separate matches
+		if (m.size() == 3)
 		{
-			// In the second (zero based) must the the number we are looking for
-			value = stoi(m[1]);
+			// In the second must be the number we are looking for
+			value = stoi(m[2]);
 			return true;
 		}
 	}
@@ -202,11 +203,12 @@ bool FileSettingsVim::FindString(const std::string longvar, const std::string sh
 	smatch m;
 	if (regex_search(_line, m, re))
 	{
-		// There should be two values
-		if (m.size() == 2)
+		// There should be three values, in [0] is the whole match
+		// In the following items are the separate matches
+		if (m.size() == 3)
 		{
-			// In the second (zero based) must the string we are looking for
-			value = m[1];
+			// In the second one must be the string we are looking for
+			value = m[2];
 			return true;
 		}
 	}
