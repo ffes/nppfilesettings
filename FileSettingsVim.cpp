@@ -20,18 +20,19 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include <windows.h>
-#include <string.h>
-#include <string>
+#include <regex>
 
 #include "NPP/PluginInterface.h"
 #include "NppFileSettings.h"
+#include "NppMessenger.h"
 #include "FileSettingsVim.h"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 
-FileSettingsVim::FileSettingsVim(const char* line) : FileSettings()
+FileSettingsVim::FileSettingsVim(NppMessenger* msgr, const std::string line)
 {
+	_msgr = msgr;
 	_line = line;
 }
 
@@ -134,118 +135,112 @@ static LangType VimLangToNppLang(std::string lang)
 	return L_EXTERNAL;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Search for "var" and when found return the value that the "var" is to
+/**
+ * Search the line for the long and short version of an integer setting
+ *
+ * @param longvar[in]
+ * @param shortvar[in]
+ * @param value[out]
+ * @return
+ */
 
-int FileSettingsVim::FindIntWorker(const char* var)
+bool FileSettingsVim::FindInt(const std::string longvar, const std::string shortvar, int& value)
 {
-	const char* pos = strstr(_line, var);
-	if (pos == NULL)
-		return 0;
+	using namespace std;
 
-	int len = strlen(var);
-	if (pos[len] != '=')
-		return 0;
+	// Search for (longvar=|shortvar=)(\d+)
+	string r = "(";
+	r += longvar;
+	r += "=|";
+	r += shortvar;
+	r += "=)(\\d+)";
 
-	int value;
-	if (sscanf_s(pos + len + 1, "%d", &value) == 1)
-		return value;
-
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Search the line for the long and short version of an integer setting
-
-int FileSettingsVim::FindInt(const char* longvar, const char* shortvar)
-{
-	int value = FindIntWorker(longvar);
-	if (value != 0)
-		return value;
-
-	return FindIntWorker(shortvar);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Search the line for the long and short version of a boolean setting
-
-bool FileSettingsVim::FindBool(const char* longvar, const char* shortvar)
-{
-	// First look for longvar
-	const char* pos = strstr(_line, longvar);
-	if (pos != NULL)
-		return true;
-
-	// Not found, so look for shortvar
-	return strstr(_line, shortvar) != NULL;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-//
-
-std::string FileSettingsVim::FindStringWorker(const char* var)
-{
-	const char* pos = strstr(_line, var);
-	if (pos == NULL)
-		return "";
-
-	int len = strlen(var);
-	if (pos[len] != '=')
-		return "";
-	pos += len + 1;
-
-	std::string value;
-	while (*pos != 0)
+	regex re(r);
+	smatch m;
+	if (regex_search(_line, m, re))
 	{
-		if (isalnum(*pos))
-			value += *pos;
-		else
-			break;
-		pos++;
+		// There should be two values
+		if (m.size() == 2)
+		{
+			// In the second (zero based) must the the number we are looking for
+			value = stoi(m[1]);
+			return true;
+		}
 	}
-
-	return value;
+	return false;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-//
+/**
+ * Search the line for the long and short version of a boolean setting
+ *
+ * @param longvar[in]
+ * @param shortvar[in]
+ * @return Is longvar or shortvar found?
+ */
 
-std::string FileSettingsVim::FindString(const char* longvar, const char* shortvar)
+bool FileSettingsVim::FindBool(const std::string longvar, const std::string shortvar) noexcept
 {
-	std::string value = FindStringWorker(longvar);
-	if (value != "")
-		return value;
-
-	return FindStringWorker(shortvar);
+	return (_line.find(longvar) != std::string::npos || _line.find(shortvar) != std::string::npos);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// *Very* basic implementation of a vim modeline parser
+/**
+ *
+ */
+
+bool FileSettingsVim::FindString(const std::string longvar, const std::string shortvar, std::string& value)
+{
+	using namespace std;
+
+	// Search for (longvar=|shortvar=)(\d+)
+	string r = "(";
+	r += longvar;
+	r += "=|";
+	r += shortvar;
+	r += "=)(\\w+)";
+
+	regex re(r);
+	smatch m;
+	if (regex_search(_line, m, re))
+	{
+		// There should be two values
+		if (m.size() == 2)
+		{
+			// In the second (zero based) must the string we are looking for
+			value = m[1];
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Very basic implementation of a vim modeline parser
+ */
 
 bool FileSettingsVim::Parse()
 {
 	// Is this a vim modeline?
-	if (strstr(_line, " vi:") == NULL && strstr(_line, " vim:") == NULL && strstr(_line, " ex:") == NULL)
+	if (_line.find(" vi:") == std::string::npos && _line.find(" vim:") == std::string::npos && _line.find(" ex:") == std::string::npos)
 		return false;
 
 	// Search for tab stop settings
-	SetTabWidth(FindInt("tabstop", "ts"));
+	int tabwidth = 0;
+	if (FindInt("tabstop", "ts", tabwidth))
+		_msgr->SetTabWidth(tabwidth);
 
 	// Search for tab expand settings
 	if (FindBool("noexpandtab", "noet"))
-		SetUseTabs(true);
+		_msgr->SetUseTabs(true);
 	else if (FindBool("expandtab", "et"))
-		SetUseTabs(false);
+		_msgr->SetUseTabs(false);
 
 	// Search for filetype and syntax to set the language for syntax highlighting
-	std::string langVIM = FindString("filetype", "ft");
-	if (langVIM == "")
-		langVIM = FindString("syntax", "syn");
-	if (langVIM != "")
+	std::string langVIM;
+	if (FindString("filetype", "ft", langVIM) || FindString("syntax", "syn", langVIM))
 	{
-		LangType langNPP = VimLangToNppLang(langVIM);
+		const LangType langNPP = VimLangToNppLang(langVIM);
 		if (langNPP != L_EXTERNAL)
-			SetLanguage(langNPP);
+			_msgr->SetLanguage(langNPP);
 	}
 
 	return true;

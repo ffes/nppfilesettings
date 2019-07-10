@@ -19,40 +19,33 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <windows.h>
+#pragma once
 
 #include "NPP/PluginInterface.h"
-#include "NppFileSettings.h"
-#include "FileSettings.h"
 
-/////////////////////////////////////////////////////////////////////////////
-//
-
-FileSettings::FileSettings() noexcept
+class NppMessenger
 {
-}
+public:
+	NppMessenger(HWND hSciWnd = nullptr);
+	virtual ~NppMessenger();
 
-/////////////////////////////////////////////////////////////////////////////
-//
+	//LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
+	LRESULT	SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);
+	LRESULT SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
 
-void FileSettings::SetTabWidth(int width)
-{
-	if (width > 0)
-		SendMsg(SCI_SETTABWIDTH, width);
-}
+	HWND		GetSciWnd() const  { return m_hSciWnd; }
+	void		SetSciWnd(HWND hSciWnd)  { m_hSciWnd = hSciWnd; }
 
-/////////////////////////////////////////////////////////////////////////////
-//
+	int			GetLineCount() const;
+	int			GetLineLength(int line) const;
+	int			GetLine(int line, char* textbuf) const;
 
-void FileSettings::SetUseTabs(bool usetabs)
-{
-	SendMsg(SCI_SETUSETABS, usetabs ? 1 : 0);
-}
+	void		SetTabWidth(int width) const;
+	void		SetUseTabs(bool usetabs) const;
+	void		SetLanguage(LangType lang) const;
 
-/////////////////////////////////////////////////////////////////////////////
-//
-
-void FileSettings::SetLanguage(LangType lang) noexcept
-{
-	SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, lang);
-}
+protected:
+	HWND m_hSciWnd;
+	SciFnDirect m_pSciMsg;
+	sptr_t m_pSciWndData;
+};

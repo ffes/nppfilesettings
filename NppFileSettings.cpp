@@ -21,15 +21,13 @@
 
 #include <windows.h>
 #include <assert.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string>
 
 #include "NPP/PluginInterface.h"
 #include "Resource.h"
 #include "NppFileSettings.h"
 #include "DlgAbout.h"
 #include "FileSettingsVim.h"
+#include "NppMessenger.h"
 
 static const int nbFunc = 1;
 static const TCHAR PLUGIN_NAME[] = L"FileSettings";
@@ -41,22 +39,21 @@ static FuncItem s_funcItem[nbFunc];
 /////////////////////////////////////////////////////////////////////////////
 //
 
-static char* GetLine(int linenumber)
+static std::string GetLine(int linenumber)
 {
 	// Get the number of lines
-	int lines = (int) SendMsg(SCI_GETLINECOUNT);
+	const int lines = (int) SendMsg(SCI_GETLINECOUNT);
 	if (linenumber > lines)
-		return NULL;
+		return "";
 
 	// Get the length of the requested line
-	int len = (int) SendMsg(SCI_LINELENGTH, linenumber);
+	const int len = (int) SendMsg(SCI_LINELENGTH, linenumber);
 	if (len == 0)
-		return NULL;
+		return "";
 
 	// Allocate enough space to store the line
 	char* szLine = new char[len + 10];
-
-	if (szLine != NULL)
+	if (szLine != nullptr)
 	{
 		// Clear the buffer
 		ZeroMemory(szLine, len + 10);
@@ -64,7 +61,11 @@ static char* GetLine(int linenumber)
 		// Get the text of the requested line
 		SendMsg(SCI_GETLINE, linenumber, (LPARAM) szLine);
 	}
-	return szLine;
+
+	std::string ret = szLine;
+	delete[] szLine;
+
+	return ret;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,23 +73,23 @@ static char* GetLine(int linenumber)
 
 static void SearchEditorFileSettings()
 {
-	int lines = (int) SendMsg(SCI_GETLINECOUNT) - 1;
+	NppMessenger msgr;
+
+	const int lines = msgr.GetLineCount() - 1;
 	if (lines <= 0)
 		return;
 
 	bool found = false;
-	int fivesLinesAbove = (lines > 5 ? lines - 5 : 0);
+	const int fivesLinesAbove = (lines > 5 ? lines - 5 : 0);
 	for (int i = lines; !found && i >= fivesLinesAbove; i--)
 	{
 		// Get the line of the file
-		char* szLine = GetLine(i);
-		if (szLine != NULL)
+		std::string line = GetLine(i);
+		if (line.length() > 0)
 		{
-			FileSettingsVim vim(szLine);
+			FileSettingsVim vim(&msgr, line);
 			if (vim.Parse())
 				found = true;
-
-			delete[] szLine;
 		}
 	}
 }
@@ -176,25 +177,12 @@ extern "C" __declspec(dllexport) LRESULT messageProc(UINT uMsg, WPARAM wParam, L
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Copy an Ansi string to a Unicode string
-
-void Ansi2Unicode(LPWSTR wszStr, LPCSTR szStr, int iSize)
-{
-	if (szStr != NULL)
-		MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, szStr, -1, wszStr, iSize);
-	else
-		*wszStr = L'\0';
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // Easy access to the MessageBox functions
 
-void MsgBox(const char* msg)
+void MsgBox(const std::string msg)
 {
-	TCHAR* tmp = (TCHAR*) malloc(sizeof(TCHAR) * (strlen(msg) + 2));
-	Ansi2Unicode(tmp, msg, (int) strlen(msg) + 1);
-	::MessageBox(g_nppData._nppHandle, tmp, PLUGIN_NAME, MB_OK);
-	free(tmp);
+	std::wstring tmp(msg.begin(), msg.end());
+	MessageBox(g_nppData._nppHandle, tmp.c_str(), PLUGIN_NAME, MB_OK);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -203,11 +191,11 @@ void MsgBox(const char* msg)
 
 LRESULT SendMsg(UINT Msg, WPARAM wParam, LPARAM lParam, int count)
 {
-	int currentEdit;
-	::SendMessage(g_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM) &currentEdit);
+	int currentEdit = 0;
+	SendMessage(g_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM) &currentEdit);
 	LRESULT res = 0;
 	for (int i = 0; i < count; i++)
-		res = ::SendMessage(getCurrentHScintilla(currentEdit), Msg, wParam, lParam);
+		res = SendMessage(getCurrentHScintilla(currentEdit), Msg, wParam, lParam);
 	return res;
 }
 

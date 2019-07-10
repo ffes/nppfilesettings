@@ -21,21 +21,22 @@
 
 #pragma once
 
-#include "FileSettings.h"
+#include <string>
 
-class FileSettingsVim : public FileSettings
+class NppMessenger;
+
+class FileSettingsVim
 {
 public:
-	FileSettingsVim(const char* line);
+	FileSettingsVim(NppMessenger* msgr, const std::string line);
 
 	bool Parse();
 
 private:
-	const char* _line;
+	NppMessenger* _msgr;
+	std::string _line;
 
-	int FindIntWorker(const char* var);
-	int FindInt(const char* longvar, const char* shortvar);
-	bool FindBool(const char* longvar, const char* shortvar);
-	std::string FindStringWorker(const char* var);
-	std::string FindString(const char* longvar, const char* shortvar);
+	bool FindInt(const std::string longvar, const std::string shortvar, int& value);
+	bool FindBool(const std::string longvar, const std::string shortvar) noexcept;
+	bool FindString(const std::string longvar, const std::string shortvar, std::string& value);
 };

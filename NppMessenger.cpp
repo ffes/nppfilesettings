@@ -19,15 +19,57 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <windows.h>
+#include "NppMessenger.h"
 
-class FileSettings
+NppMessenger::NppMessenger(HWND hSciWnd)
 {
-public:
-	FileSettings() noexcept;
+	m_hSciWnd = hSciWnd;
+	m_pSciMsg = (SciFnDirect) SendMessage(m_hSciWnd, SCI_GETDIRECTFUNCTION, 0, 0);
+	m_pSciWndData = (sptr_t) SendMessage(m_hSciWnd, SCI_GETDIRECTPOINTER, 0, 0);
+}
 
-protected:
-	void SetTabWidth(int width);
-	void SetUseTabs(bool usetabs);
-	void SetLanguage(LangType lang) noexcept;
-};
+NppMessenger::~NppMessenger()
+{
+}
+
+LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	return m_pSciMsg(m_pSciWndData, uMsg, wParam, lParam);
+}
+
+LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const
+{
+	return m_pSciMsg(m_pSciWndData, uMsg, wParam, lParam);
+}
+
+int NppMessenger::GetLineCount() const
+{
+	return (int) SendSciMsg(SCI_GETLINECOUNT);
+}
+
+int NppMessenger::GetLineLength(int line) const
+{
+	return (int) SendSciMsg(SCI_LINELENGTH, (WPARAM) line);
+}
+
+int NppMessenger::GetLine(int line, char* textbuf) const
+{
+	return (int) SendSciMsg(SCI_GETLINE, (WPARAM) line, (LPARAM) textbuf);
+}
+
+
+void NppMessenger::SetTabWidth(int width) const
+{
+	SendSciMsg(SCI_SETTABWIDTH, width);
+}
+
+void NppMessenger::SetUseTabs(bool usetabs) const
+{
+	SendSciMsg(SCI_SETUSETABS, usetabs ? 1 : 0);
+}
+
+void NppMessenger::SetLanguage(LangType lang) const
+{
+	//SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, lang);
+}

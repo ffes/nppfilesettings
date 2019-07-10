@@ -181,17 +181,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DlgAbout.cpp" />
-    <ClCompile Include="FileSettings.cpp" />
     <ClCompile Include="FileSettingsVim.cpp" />
     <ClCompile Include="NppFileSettings.cpp" />
+    <ClCompile Include="NppMessenger.cpp" />
     <ClCompile Include="Version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DlgAbout.h" />
-    <ClInclude Include="FileSettings.h" />
     <ClInclude Include="FileSettingsVim.h" />
     <ClInclude Include="NppFileSettings.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="NppMessenger.h" />
     <ClInclude Include="Version.h" />
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,7 @@
     <ClCompile Include="FileSettingsVim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSettings.cpp">
+    <ClCompile Include="NppMessenger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="FileSettingsVim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSettings.h">
+    <ClInclude Include="NppMessenger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
