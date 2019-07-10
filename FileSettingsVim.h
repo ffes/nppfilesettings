@@ -39,4 +39,6 @@ private:
 	bool FindInt(const std::string longvar, const std::string shortvar, int& value);
 	bool FindBool(const std::string longvar, const std::string shortvar) noexcept;
 	bool FindString(const std::string longvar, const std::string shortvar, std::string& value);
+
+	LangType VimLangToNppLang(std::string lang);
 };

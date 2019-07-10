@@ -36,10 +36,16 @@ FileSettingsVim::FileSettingsVim(NppMessenger* msgr, const std::string line)
 	_line = line;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Based on /usr/share/vim/vim80/syntax
+/**
+ * Convert the VIM lang into a N++ LangType
+ *
+ * @param[in] lang The language in the vim modline
+ * @return the corresponding Notepad++ language
+ *
+ * @remark Largely based on /usr/share/vim/vim80/syntax
+ */
 
-static LangType VimLangToNppLang(std::string lang)
+LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 {
 	// Go through all the languages we know of
 	if (lang == "ada")				return L_ADA;
