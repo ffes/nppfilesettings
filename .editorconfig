@@ -9,7 +9,7 @@ indent_style = tab
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[{*.{vcxproj,vcxproj.user,props}}]
+[{*.{vcxproj,vcxproj.user,runsettings}}]
 indent_size = 2
 indent_style = space
 insert_final_newline = false

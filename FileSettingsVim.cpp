@@ -24,8 +24,13 @@
 
 #include "NPP/PluginInterface.h"
 #include "NppFileSettings.h"
-#include "NppMessenger.h"
 #include "FileSettingsVim.h"
+
+#ifdef USE_CATCH2
+#include "Tests/Mock_NppMessenger.h"
+#else
+#include "NppMessenger.h"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //
