@@ -19,7 +19,7 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#include "Mock_NppMessenger.h"
+#include "Mock/NppMessenger.h"
 
 NppMessenger::NppMessenger()
 {

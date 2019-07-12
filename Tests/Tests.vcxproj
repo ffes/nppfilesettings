@@ -125,12 +125,12 @@
   <ItemGroup>
     <ClCompile Include="..\FileSettingsVim.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mock_NppMessenger.cpp" />
+    <ClCompile Include="Mock\NppMessenger.cpp" />
     <ClCompile Include="vim-parse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="catch2\catch.hpp" />
-    <ClInclude Include="Mock_NppMessenger.h" />
+    <ClInclude Include="Mock\NppMessenger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 #include "../NPP/PluginInterface.h"
 #include "../FileSettingsVim.h"
-#include "Mock_NppMessenger.h"
+#include "Mock/NppMessenger.h"
 
 TEST_CASE("Vim::Parse(), ts=4")
 {

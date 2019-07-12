@@ -15,13 +15,11 @@
     </Filter>
     <Filter Include="Mock">
       <UniqueIdentifier>{dc0079b4-6711-44af-b993-c324c826b741}</UniqueIdentifier>
-      <Extensions>Mock_*</Extensions>
+      <Extensions>
+      </Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mock_NppMessenger.cpp">
-      <Filter>Mock</Filter>
-    </ClCompile>
     <ClCompile Include="vim-parse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,13 +29,16 @@
     <ClCompile Include="..\FileSettingsVim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mock\NppMessenger.cpp">
+      <Filter>Mock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mock_NppMessenger.h">
-      <Filter>Mock</Filter>
-    </ClInclude>
     <ClInclude Include="catch2\catch.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mock\NppMessenger.h">
+      <Filter>Mock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
