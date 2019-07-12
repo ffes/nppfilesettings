@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  NppMessenger v1.0.0                                                    //
+//  Copyright (c) 2019 Frank Fesevur                                       //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -19,28 +19,52 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <windows.h>
 #include "NppMessenger.h"
 
-NppMessenger::NppMessenger(HWND hSciWnd)
+NppMessenger::NppMessenger()
 {
-	m_hSciWnd = hSciWnd;
-	m_pSciMsg = (SciFnDirect) SendMessage(m_hSciWnd, SCI_GETDIRECTFUNCTION, 0, 0);
-	m_pSciWndData = (sptr_t) SendMessage(m_hSciWnd, SCI_GETDIRECTPOINTER, 0, 0);
+}
+
+NppMessenger::NppMessenger(NppData notpadPlusData)
+{
+	SetNppData(notpadPlusData);
 }
 
 NppMessenger::~NppMessenger()
 {
 }
 
+void NppMessenger::SetNppData(NppData notpadPlusData)
+{
+	m_nppData = notpadPlusData;
+}
+
+LRESULT NppMessenger::SendNppMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	return SendMessage(m_nppData._nppHandle, uMsg, wParam, lParam);
+}
+
+LRESULT NppMessenger::SendNppMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const
+{
+	return SendMessage(m_nppData._nppHandle, uMsg, wParam, lParam);
+}
+
 LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	return m_pSciMsg(m_pSciWndData, uMsg, wParam, lParam);
+	int currentEdit = 0;
+	SendMessage(m_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&currentEdit);
+
+	HWND hWndScintilla = (currentEdit == 0) ? m_nppData._scintillaMainHandle : m_nppData._scintillaSecondHandle;
+	return SendMessage(hWndScintilla, uMsg, wParam, lParam);
 }
 
 LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const
 {
-	return m_pSciMsg(m_pSciWndData, uMsg, wParam, lParam);
+	int currentEdit = 0;
+	SendMessage(m_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&currentEdit);
+
+	HWND hWndScintilla = (currentEdit == 0) ? m_nppData._scintillaMainHandle : m_nppData._scintillaSecondHandle;
+	return SendMessage(hWndScintilla, uMsg, wParam, lParam);
 }
 
 int NppMessenger::GetLineCount() const
@@ -58,7 +82,6 @@ int NppMessenger::GetLine(int line, char* textbuf) const
 	return (int) SendSciMsg(SCI_GETLINE, (WPARAM) line, (LPARAM) textbuf);
 }
 
-
 void NppMessenger::SetTabWidth(int width) const
 {
 	SendSciMsg(SCI_SETTABWIDTH, width);
@@ -71,5 +94,5 @@ void NppMessenger::SetUseTabs(bool usetabs) const
 
 void NppMessenger::SetLanguage(LangType lang) const
 {
-	//SendMessage(g_nppData._nppHandle, NPPM_SETCURRENTLANGTYPE, 0, lang);
+	SendNppMsg(NPPM_SETCURRENTLANGTYPE, 0, lang);
 }

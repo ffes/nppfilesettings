@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  NppMessenger v1.0.0                                                    //
+//  Copyright (c) 2019 Frank Fesevur                                       //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -26,15 +26,18 @@
 class NppMessenger
 {
 public:
-	NppMessenger(HWND hSciWnd = nullptr);
+	NppMessenger();
+	NppMessenger(NppData notpadPlusData);
 	virtual ~NppMessenger();
 
-	//LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
+	void SetNppData(NppData notpadPlusData);
+	HWND GetNppHandle() const { return m_nppData._nppHandle; };
+
+	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);
+	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
+
 	LRESULT	SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);
 	LRESULT SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
-
-	HWND		GetSciWnd() const  { return m_hSciWnd; }
-	void		SetSciWnd(HWND hSciWnd)  { m_hSciWnd = hSciWnd; }
 
 	int			GetLineCount() const;
 	int			GetLineLength(int line) const;
@@ -45,7 +48,5 @@ public:
 	void		SetLanguage(LangType lang) const;
 
 protected:
-	HWND m_hSciWnd;
-	SciFnDirect m_pSciMsg;
-	sptr_t m_pSciWndData;
+	NppData m_nppData;
 };
