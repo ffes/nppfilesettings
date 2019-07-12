@@ -54,7 +54,7 @@ TEST_CASE("Vim::Parse(), noexpandtab")
 	REQUIRE(msgr._usetabs == true);
 }
 
-TEST_CASE("Vim::Parse(), ex")
+TEST_CASE("Vim::Parse(), et")
 {
 	NppMessenger msgr;
 	FileSettingsVim vim(&msgr, "# vim: et");
@@ -65,7 +65,7 @@ TEST_CASE("Vim::Parse(), ex")
 	REQUIRE(msgr._usetabs == false);
 }
 
-TEST_CASE("Vim::Parse(), noex")
+TEST_CASE("Vim::Parse(), noet")
 {
 	NppMessenger msgr;
 	FileSettingsVim vim(&msgr, "# vim: noet");
