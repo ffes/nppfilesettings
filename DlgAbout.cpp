@@ -58,7 +58,7 @@ static BOOL OnInitDialog(HWND hDlg)
 
 	// Show the relevant part of the changelog
 	std::wstring txt;
-	WCHAR szTmp[_MAX_PATH];
+	WCHAR szTmp[_MAX_PATH] = { 0 };
 	for (int i = 0; i < s_showTill; i++)
 	{
 		if (!txt.empty())
@@ -110,9 +110,9 @@ static BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				case NM_CLICK:
 				case NM_RETURN:
 				{
-					PNMLINK pNMLink = (PNMLINK) lParam;
-					LITEM item = pNMLink->item;
-					ShellExecute(NULL, L"open", item.szUrl, NULL, NULL, SW_SHOW);
+					const PNMLINK pNMLink = (PNMLINK) lParam;
+					const LITEM item = pNMLink->item;
+					ShellExecute(nullptr, L"open", item.szUrl, nullptr, nullptr, SW_SHOW);
 				}
 			}
 			return FALSE;
