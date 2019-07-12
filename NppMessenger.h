@@ -26,26 +26,22 @@
 class NppMessenger
 {
 public:
-	NppMessenger();
-	NppMessenger(NppData notpadPlusData);
-	virtual ~NppMessenger();
+	NppMessenger() noexcept;
+	NppMessenger(NppData notpadPlusData) noexcept;
 
-	void SetNppData(NppData notpadPlusData);
-	HWND GetNppHandle() const { return m_nppData._nppHandle; };
+	void SetNppData(NppData notpadPlusData) noexcept;
+	HWND GetNppHandle() const noexcept { return m_nppData._nppHandle; };
 
-	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);
-	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
+	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const noexcept;
+	LRESULT SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const noexcept;
 
-	LRESULT	SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);
-	LRESULT SendSciMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const;
+	int		GetLineCount() const noexcept;
+	int		GetLineLength(int line) const noexcept;
+	int		GetLine(int line, char* textbuf) const noexcept;
 
-	int			GetLineCount() const;
-	int			GetLineLength(int line) const;
-	int			GetLine(int line, char* textbuf) const;
-
-	void		SetTabWidth(int width) const;
-	void		SetUseTabs(bool usetabs) const;
-	void		SetLanguage(LangType lang) const;
+	void	SetTabWidth(int width) const noexcept;
+	void	SetUseTabs(bool usetabs) const noexcept;
+	void	SetLanguage(LangType lang) const noexcept;
 
 protected:
 	NppData m_nppData;

@@ -21,78 +21,60 @@
 
 #include "NppMessenger.h"
 
-NppMessenger::NppMessenger()
+NppMessenger::NppMessenger() noexcept
 {
 }
 
-NppMessenger::NppMessenger(NppData notpadPlusData)
+NppMessenger::NppMessenger(NppData notpadPlusData) noexcept
 {
 	SetNppData(notpadPlusData);
 }
 
-NppMessenger::~NppMessenger()
-{
-}
-
-void NppMessenger::SetNppData(NppData notpadPlusData)
+void NppMessenger::SetNppData(NppData notpadPlusData) noexcept
 {
 	m_nppData = notpadPlusData;
 }
 
-LRESULT NppMessenger::SendNppMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT NppMessenger::SendNppMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const noexcept
 {
 	return SendMessage(m_nppData._nppHandle, uMsg, wParam, lParam);
 }
 
-LRESULT NppMessenger::SendNppMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const
-{
-	return SendMessage(m_nppData._nppHandle, uMsg, wParam, lParam);
-}
-
-LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const noexcept
 {
 	int currentEdit = 0;
-	SendMessage(m_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&currentEdit);
+	SendMessage(m_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM) &currentEdit);
 
-	HWND hWndScintilla = (currentEdit == 0) ? m_nppData._scintillaMainHandle : m_nppData._scintillaSecondHandle;
+	const HWND hWndScintilla = (currentEdit == 0) ? m_nppData._scintillaMainHandle : m_nppData._scintillaSecondHandle;
 	return SendMessage(hWndScintilla, uMsg, wParam, lParam);
 }
 
-LRESULT NppMessenger::SendSciMsg(UINT uMsg, WPARAM wParam, LPARAM lParam) const
-{
-	int currentEdit = 0;
-	SendMessage(m_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&currentEdit);
-
-	HWND hWndScintilla = (currentEdit == 0) ? m_nppData._scintillaMainHandle : m_nppData._scintillaSecondHandle;
-	return SendMessage(hWndScintilla, uMsg, wParam, lParam);
-}
-
-int NppMessenger::GetLineCount() const
+int NppMessenger::GetLineCount() const noexcept
 {
 	return (int) SendSciMsg(SCI_GETLINECOUNT);
 }
 
-int NppMessenger::GetLineLength(int line) const
+int NppMessenger::GetLineLength(int line) const noexcept
 {
 	return (int) SendSciMsg(SCI_LINELENGTH, (WPARAM) line);
 }
 
-int NppMessenger::GetLine(int line, char* textbuf) const
+int NppMessenger::GetLine(int line, char* textbuf) const noexcept
 {
 	return (int) SendSciMsg(SCI_GETLINE, (WPARAM) line, (LPARAM) textbuf);
 }
 
-void NppMessenger::SetTabWidth(int width) const
+void NppMessenger::SetTabWidth(int width) const noexcept
 {
 	SendSciMsg(SCI_SETTABWIDTH, width);
 }
 
-void NppMessenger::SetUseTabs(bool usetabs) const
+void NppMessenger::SetUseTabs(bool usetabs) const noexcept
 {
 	SendSciMsg(SCI_SETUSETABS, usetabs ? 1 : 0);
 }
 
-void NppMessenger::SetLanguage(LangType lang) const
+void NppMessenger::SetLanguage(LangType lang) const noexcept
 {
 	SendNppMsg(NPPM_SETCURRENTLANGTYPE, 0, lang);
 }
