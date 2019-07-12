@@ -26,6 +26,7 @@
 
 #include "NPP/PluginInterface.h"
 #include "NppFileSettings.h"
+#include "NppMessenger.h"
 #include "Resource.h"
 #include "Version.h"
 
@@ -138,7 +139,7 @@ static BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 void ShowAboutDlg()
 {
 	s_showTill = MAX_VERSION_INFO;
-	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_nppData._nppHandle, (DLGPROC) DlgProc);
+	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_Msgr.GetNppHandle(), (DLGPROC) DlgProc);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,5 +158,5 @@ void ShowAboutDlgVersion(Version prevVer)
 		}
 	}
 
-	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_nppData._nppHandle, (DLGPROC) DlgProc);
+	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_Msgr.GetNppHandle(), (DLGPROC) DlgProc);
 }

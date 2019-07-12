@@ -19,7 +19,6 @@
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <windows.h>
 #include <assert.h>
 
 #include "NPP/PluginInterface.h"
@@ -33,7 +32,7 @@ static const int nbFunc = 1;
 static const TCHAR PLUGIN_NAME[] = L"FileSettings";
 
 HINSTANCE g_hInst;
-NppData g_nppData;
+NppMessenger g_Msgr;
 static FuncItem s_funcItem[nbFunc];
 
 /////////////////////////////////////////////////////////////////////////////
@@ -42,12 +41,12 @@ static FuncItem s_funcItem[nbFunc];
 static std::string GetLine(int linenumber)
 {
 	// Get the number of lines
-	const int lines = (int) SendMsg(SCI_GETLINECOUNT);
+	const int lines = g_Msgr.GetLineCount();
 	if (linenumber > lines)
 		return "";
 
 	// Get the length of the requested line
-	const int len = (int) SendMsg(SCI_LINELENGTH, linenumber);
+	const int len = g_Msgr.GetLineLength(linenumber);
 	if (len == 0)
 		return "";
 
@@ -59,7 +58,7 @@ static std::string GetLine(int linenumber)
 		ZeroMemory(szLine, len + 10);
 
 		// Get the text of the requested line
-		SendMsg(SCI_GETLINE, linenumber, (LPARAM) szLine);
+		g_Msgr.GetLine(linenumber, szLine);
 	}
 
 	std::string ret = szLine;
@@ -73,9 +72,7 @@ static std::string GetLine(int linenumber)
 
 static void SearchEditorFileSettings()
 {
-	NppMessenger msgr;
-
-	const int lines = msgr.GetLineCount() - 1;
+	const int lines = g_Msgr.GetLineCount() - 1;
 	if (lines <= 0)
 		return;
 
@@ -87,7 +84,7 @@ static void SearchEditorFileSettings()
 		std::string line = GetLine(i);
 		if (line.length() > 0)
 		{
-			FileSettingsVim vim(&msgr, line);
+			FileSettingsVim vim(&g_Msgr, line);
 			if (vim.Parse())
 				found = true;
 		}
@@ -99,7 +96,7 @@ static void SearchEditorFileSettings()
 
 extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData)
 {
-	g_nppData = notpadPlusData;
+	g_Msgr.SetNppData(notpadPlusData);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -117,14 +114,6 @@ extern "C" __declspec(dllexport) FuncItem* getFuncsArray(int *nbF)
 {
 	*nbF = nbFunc;
 	return s_funcItem;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-//
-
-HWND getCurrentHScintilla(int which)
-{
-	return (which == 0) ? g_nppData._scintillaMainHandle : g_nppData._scintillaSecondHandle;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,42 +166,28 @@ extern "C" __declspec(dllexport) LRESULT messageProc(UINT uMsg, WPARAM wParam, L
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Easy access to the MessageBox functions
+// Easy access to the MessageBox function
 
 void MsgBox(const std::string msg)
 {
 	std::wstring tmp(msg.begin(), msg.end());
-	MessageBox(g_nppData._nppHandle, tmp.c_str(), PLUGIN_NAME, MB_OK);
+	MessageBox(g_Msgr.GetNppHandle(), tmp.c_str(), PLUGIN_NAME, MB_OK);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Send a simple message to the Notepad++ window 'count' times and return
-// the last result.
-
-LRESULT SendMsg(UINT Msg, WPARAM wParam, LPARAM lParam, int count)
-{
-	int currentEdit = 0;
-	SendMessage(g_nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM) &currentEdit);
-	LRESULT res = 0;
-	for (int i = 0; i < count; i++)
-		res = SendMessage(getCurrentHScintilla(currentEdit), Msg, wParam, lParam);
-	return res;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Make the window center, relative the NPP-window
+// Make the window center, relative to the NPP-window
 
 void CenterWindow(HWND hDlg) noexcept
 {
 	RECT rc;
-	GetClientRect(g_nppData._nppHandle, &rc);
+	GetClientRect(g_Msgr.GetNppHandle(), &rc);
 	const int w = rc.right - rc.left;
 	const int h = rc.bottom - rc.top;
 
 	POINT center;
 	center.x = rc.left + (w / 2);
 	center.y = rc.top + (h / 2);
-	ClientToScreen(g_nppData._nppHandle, &center);
+	ClientToScreen(g_Msgr.GetNppHandle(), &center);
 
 	RECT dlgRect;
 	GetClientRect(hDlg, &dlgRect);
