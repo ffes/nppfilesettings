@@ -43,3 +43,34 @@ TEST_CASE("Vim::Parse(), expandtab")
 	REQUIRE(res == true);
 	REQUIRE(msgr._usetabs == false);
 }
+
+TEST_CASE("Vim::Parse(), noexpandtab")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: noexpandtab");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._usetabs == true);
+}
+
+TEST_CASE("Vim::Parse(), ex")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: et");
+
+	msgr._usetabs = true;
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._usetabs == false);
+}
+
+TEST_CASE("Vim::Parse(), noex")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: noet");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._usetabs == true);
+}
