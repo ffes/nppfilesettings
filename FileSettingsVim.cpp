@@ -27,7 +27,7 @@
 #include "FileSettingsVim.h"
 
 #ifdef USE_CATCH2
-#include "Tests/Mock_NppMessenger.h"
+#include "Tests/Mock/NppMessenger.h"
 #else
 #include "NppMessenger.h"
 #endif
