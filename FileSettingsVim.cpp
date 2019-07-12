@@ -241,7 +241,7 @@ bool FileSettingsVim::Parse()
 	if (FindInt("tabstop", "ts", tabwidth))
 		_msgr->SetTabWidth(tabwidth);
 
-	// Search for tab expand settings
+	// Search for tab expand settings, expanding tabs mean "use spaces when tab is pressed"
 	if (FindBool("noexpandtab", "noet"))
 		_msgr->SetUseTabs(true);
 	else if (FindBool("expandtab", "et"))
