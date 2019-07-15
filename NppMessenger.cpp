@@ -23,14 +23,17 @@
 
 NppMessenger::NppMessenger() noexcept
 {
+	m_nppData._nppHandle = nullptr;
+	m_nppData._scintillaMainHandle = nullptr;
+	m_nppData._scintillaSecondHandle = nullptr;
 }
 
-NppMessenger::NppMessenger(NppData notpadPlusData) noexcept
+NppMessenger::NppMessenger(const NppData& notpadPlusData) noexcept
 {
 	SetNppData(notpadPlusData);
 }
 
-void NppMessenger::SetNppData(NppData notpadPlusData) noexcept
+void NppMessenger::SetNppData(const NppData& notpadPlusData) noexcept
 {
 	m_nppData = notpadPlusData;
 }

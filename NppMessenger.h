@@ -27,9 +27,9 @@ class NppMessenger
 {
 public:
 	NppMessenger() noexcept;
-	NppMessenger(NppData notpadPlusData) noexcept;
+	NppMessenger(const NppData& notpadPlusData) noexcept;
 
-	void SetNppData(NppData notpadPlusData) noexcept;
+	void SetNppData(const NppData& notpadPlusData) noexcept;
 	HWND GetNppHandle() const noexcept { return m_nppData._nppHandle; };
 
 	LRESULT SendNppMsg(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0) const noexcept;
