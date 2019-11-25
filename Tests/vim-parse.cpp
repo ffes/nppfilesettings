@@ -33,6 +33,16 @@ TEST_CASE("Vim::Parse(), filetype=dosini")
 	REQUIRE(msgr._lang == L_INI);
 }
 
+TEST_CASE("Vim::Parse(), filetype=random")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: filetype=random");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._lang == L_EXTERNAL);
+}
+
 TEST_CASE("Vim::Parse(), expandtab")
 {
 	NppMessenger msgr;
@@ -73,6 +83,18 @@ TEST_CASE("Vim::Parse(), noet")
 	const bool res = vim.Parse();
 	REQUIRE(res == true);
 	REQUIRE(msgr._usetabs == true);
+}
+
+TEST_CASE("Vim::Parse(), et ts=6")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: et ts=6");
+
+	msgr._usetabs = true;
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._usetabs == false);
+	REQUIRE(msgr._tabwidth == 6);
 }
 
 TEST_CASE("Vim::Parse(), empty line")
