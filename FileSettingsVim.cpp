@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
 //  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  Copyright (c) 2015-2019 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -32,8 +32,12 @@
 #include "NppMessenger.h"
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-//
+/**
+ * Constructor
+ *
+ * @param [in] msgr The instance of NppMessenger
+ * @param [in] line The line where a VIM modeline needs to searched for
+ */
 
 FileSettingsVim::FileSettingsVim(NppMessenger* msgr, const std::string line)
 {
@@ -42,10 +46,11 @@ FileSettingsVim::FileSettingsVim(NppMessenger* msgr, const std::string line)
 }
 
 /**
- * Convert the VIM lang into a N++ LangType
+ * Convert the VIM lang into a Notepad++ LangType
  *
- * @param[in] lang The language in the vim modline
- * @return the corresponding Notepad++ language
+ * @param [in] lang The language in the vim modline
+ *
+ * @return The corresponding Notepad++ language
  *
  * @remark Largely based on /usr/share/vim/vim80/syntax
  */
@@ -149,10 +154,11 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 /**
  * Search the line for the long and short version of an integer setting
  *
- * @param longvar[in]
- * @param shortvar[in]
- * @param value[out]
- * @return
+ * @param [in] longvar  The long variant of the setting to search for
+ * @param [in] shortvar The short variant of the setting to search for
+ * @param [out] value   The value of the setting
+ *
+ * @return Is the setting found?
  */
 
 bool FileSettingsVim::FindInt(const std::string longvar, const std::string shortvar, int& value)
@@ -185,9 +191,10 @@ bool FileSettingsVim::FindInt(const std::string longvar, const std::string short
 /**
  * Search the line for the long and short version of a boolean setting
  *
- * @param longvar[in]
- * @param shortvar[in]
- * @return Is longvar or shortvar found?
+ * @param [in] longvar  The long variant of the setting to search for
+ * @param [in] shortvar The short variant of the setting to search for
+ *
+ * @return Was the setting found?
  */
 
 bool FileSettingsVim::FindBool(const std::string longvar, const std::string shortvar) noexcept
@@ -196,7 +203,13 @@ bool FileSettingsVim::FindBool(const std::string longvar, const std::string shor
 }
 
 /**
+ * Search the line for the long and short version of a string setting
  *
+ * @param [in] longvar  The long variant of the setting to search for
+ * @param [in] shortvar The short variant of the setting to search for
+ * @param [out] value   The value of the setting
+ *
+ * @return Is the setting found?
  */
 
 bool FileSettingsVim::FindString(const std::string longvar, const std::string shortvar, std::string& value)
@@ -228,6 +241,8 @@ bool FileSettingsVim::FindString(const std::string longvar, const std::string sh
 
 /**
  * Very basic implementation of a vim modeline parser
+ *
+ * @return Is the current line a vim modeline?
  */
 
 bool FileSettingsVim::Parse()
