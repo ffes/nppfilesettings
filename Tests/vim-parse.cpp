@@ -74,3 +74,21 @@ TEST_CASE("Vim::Parse(), noet")
 	REQUIRE(res == true);
 	REQUIRE(msgr._usetabs == true);
 }
+
+TEST_CASE("Vim::Parse(), empty line")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == false);
+}
+
+TEST_CASE("Vim::Parse(), random line")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "some random text");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == false);
+}
