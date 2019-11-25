@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
 //  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  Copyright (c) 2015-2019 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -28,26 +28,6 @@
 #include "NppFileSettings.h"
 #include "NppMessenger.h"
 #include "Resource.h"
-#include "Version.h"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-
-struct VersionInfo
-{
-	BYTE	version[VERSION_DIGITS];
-	int		date[3];
-	WCHAR*	text;
-};
-
-#define MAX_VERSION_INFO 1
-
-static VersionInfo s_info[MAX_VERSION_INFO] =
-{
-	{	{1,0,0,0},	{2015, 9, 23},	L"Initial release" }
-};
-
-static int s_showTill = MAX_VERSION_INFO;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -55,38 +35,6 @@ static int s_showTill = MAX_VERSION_INFO;
 static BOOL OnInitDialog(HWND hDlg)
 {
 	CenterWindow(hDlg);
-
-	// Show the relevant part of the changelog
-	std::wstring txt;
-	WCHAR szTmp[_MAX_PATH] = { 0 };
-	for (int i = 0; i < s_showTill; i++)
-	{
-		if (!txt.empty())
-			txt += L"\r\n\r\n";
-
-		// Add the version number
-		txt += L"Version ";
-		swprintf(szTmp, _MAX_PATH, L"%d.%d.%d", s_info[i].version[0], s_info[i].version[1], s_info[i].version[2]);
-		txt += szTmp;
-
-		// Add the release date
-		struct tm released;
-		ZeroMemory(&released, sizeof(tm));
-		released.tm_year = s_info[i].date[0] - 1900;
-		released.tm_mon = s_info[i].date[1] - 1;
-		released.tm_mday = s_info[i].date[2];
-
-		txt += L", released on ";
-		wcsftime(szTmp,_MAX_PATH, L"%d-%b-%Y", &released);
-		txt += szTmp;
-		txt += L"\r\n";
-
-		// Add the changelog
-		txt += s_info[i].text;
-	}
-	SetDlgItemText(hDlg, IDC_CHANGELOG, txt.c_str());
-
-	// Let windows set focus
 	return TRUE;
 }
 
@@ -138,25 +86,5 @@ static BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 void ShowAboutDlg()
 {
-	s_showTill = MAX_VERSION_INFO;
-	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_Msgr.GetNppHandle(), (DLGPROC) DlgProc);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Show the About Dialog, with version information until 'prevVer'
-
-void ShowAboutDlgVersion(Version prevVer)
-{
-	s_showTill = MAX_VERSION_INFO;
-	for (int i = 0; i < MAX_VERSION_INFO; i++)
-	{
-		Version ver(s_info[i].version);
-		if (ver == prevVer)
-		{
-			s_showTill = i;
-			break;
-		}
-	}
-
 	DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), g_Msgr.GetNppHandle(), (DLGPROC) DlgProc);
 }

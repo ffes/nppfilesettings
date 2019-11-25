@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
 //  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  Copyright (c) 2015-2019 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -21,7 +21,4 @@
 
 #pragma once
 
-class Version;
-
 extern void ShowAboutDlg();
-extern void ShowAboutDlgVersion(Version prevVer);
