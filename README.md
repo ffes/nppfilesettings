@@ -43,11 +43,9 @@ Wish List
 * Make the code more generic, so parsers for other editors should be easy
   to implement.
 
-* Modeline Generator to add a modeline, compatible with your editor of choice,
+* [Modeline Generator](https://www.wireshark.org/tools/modelines.html)
+  to add a modeline, compatible with your editor of choice,
   to the current file or edit the existing one.
-
-* Support for [.kateconfig files](http://kate-editor.org/2006/02/09/kateconfig-files/)
-  and maybe for similar concepts by other editors.
 
 * Add a dialog to show which settings are active for the current document.
 
