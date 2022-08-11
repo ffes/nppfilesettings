@@ -48,11 +48,12 @@ FileSettingsVim::FileSettingsVim(NppMessenger* msgr, const std::string line)
 /**
  * Convert the VIM lang into a Notepad++ LangType
  *
- * @param [in] lang The language in the vim modline
+ * @param [in] lang The language in the vim modeline
  *
  * @return The corresponding Notepad++ language
  *
  * @remark Largely based on /usr/share/vim/vim80/syntax
+ *         The filenames in that directory are the words that need to be used as vim language.
  */
 
 LangType FileSettingsVim::VimLangToNppLang(std::string lang)
