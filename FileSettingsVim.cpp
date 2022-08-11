@@ -105,7 +105,7 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 	if (lang == "make")				return L_MAKEFILE;
 	if (lang == "matlab")			return L_MATLAB;
 	if (lang == "mmix")				return L_MMIXAL;
-	//L_NIMROD
+	//L_NIM
 	if (lang == "crontab")			return L_NNCRONTAB;
 	if (lang == "nsis")				return L_NSIS;
 	if (lang == "objc")				return L_OBJC;
@@ -134,6 +134,7 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 	if (lang == "tcl")				return L_TCL;
 	//L_TEHEX
 	if (lang == "tex")				return L_TEX;
+	if (lang == "typescript")		return L_TYPESCRIPT;
 	//L_TXT2TAGS
 	if (lang == "vb")				return L_VB;
 	if (lang == "basic")			return L_VB;
