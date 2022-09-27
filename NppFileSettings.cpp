@@ -70,7 +70,7 @@ static std::string GetLine(int linenumber)
 /////////////////////////////////////////////////////////////////////////////
 // Search in the file for the various file settings for the various editors
 
-static void SearchEditorFileSettings()
+static void SearchForFileSettings()
 {
 	const int lines = g_Msgr.GetLineCount() - 1;
 	if (lines <= 0)
@@ -143,7 +143,7 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 
 		case NPPN_BUFFERACTIVATED:
 		{
-			SearchEditorFileSettings();
+			SearchForFileSettings();
 			break;
 		}
 	}
