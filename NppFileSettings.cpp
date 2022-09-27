@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
 //  NppFileSettings                                                        //
-//  Copyright (c) 2015-2016 Frank Fesevur                                  //
+//  Copyright (c) 2015-2022 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -70,15 +70,16 @@ static std::string GetLine(int linenumber)
 /////////////////////////////////////////////////////////////////////////////
 // Search in the file for the various file settings for the various editors
 
-static void SearchForFileSettings()
+static void SearchForFileSettings(int linesToSearch)
 {
-	const int lines = g_Msgr.GetLineCount() - 1;
-	if (lines <= 0)
+	// Get the total number of lines in the file
+	const int totalLines = g_Msgr.GetLineCount() - 1;
+	if (totalLines <= 0)
 		return;
 
-	bool found = false;
-	const int fivesLinesAbove = (lines > 5 ? lines - 5 : 0);
-	for (int i = lines; !found && i >= fivesLinesAbove; i--)
+	// Search the bottom `linesToSearch` lines
+	const int linesAtBottom = (totalLines > linesToSearch ? totalLines - linesToSearch : 0);
+	for (int i = totalLines; i >= linesAtBottom; i--)
 	{
 		// Get the line of the file
 		std::string line = GetLine(i);
@@ -86,7 +87,7 @@ static void SearchForFileSettings()
 		{
 			FileSettingsVim vim(&g_Msgr, line);
 			if (vim.Parse())
-				found = true;
+				return;
 		}
 	}
 }
@@ -143,7 +144,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification* notifyCode)
 
 		case NPPN_BUFFERACTIVATED:
 		{
-			SearchForFileSettings();
+			// TODO: Make number of line to search for configurable
+			SearchForFileSettings(5);	// Search 5 lines
 			break;
 		}
 	}
