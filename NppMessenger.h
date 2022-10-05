@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
 //  NppMessenger v1.0.0                                                    //
-//  Copyright (c) 2019 Frank Fesevur                                       //
+//  Copyright (c) 2019-2022 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include <string>
 #include "NPP/PluginInterface.h"
 
 class NppMessenger
@@ -38,11 +39,25 @@ public:
 	int		GetLineCount() const noexcept;
 	int		GetLineLength(int line) const noexcept;
 	int		GetLine(int line, char* textbuf) const noexcept;
+	LangType GetLanguage() const noexcept;
+
+	int		GetCurrentPos() const noexcept;
+	void	SetSelectionStart(const int start) const noexcept;
+	void	SetSelectionEnd(const int end) const noexcept;
+
+	bool	GetCurrentFullPath(std::wstring& path) const;
+	bool	GetFilename(std::wstring& filename) const;
+	bool	GetPluginConfigDir(std::wstring& path) const;
 
 	void	SetTabWidth(int width) const noexcept;
 	void	SetUseTabs(bool usetabs) const noexcept;
 	void	SetLanguage(LangType lang) const noexcept;
 
+	COLORREF GetEditorDefaultForegroundColor() const noexcept;
+	COLORREF GetEditorDefaultBackgroundColor() const noexcept;
+
 protected:
 	NppData m_nppData;
+
+	bool	GetStringFromNpp(UINT uMsg, std::wstring& str) const;
 };
