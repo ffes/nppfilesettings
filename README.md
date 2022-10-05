@@ -20,14 +20,20 @@ Planned
 -------
 
 * Support more VIM modelines items, if possible
-  - `wrap` (wrap lines)
-  - `nowrap` (don't wrap lines)
+  - `wrap` and `nowrap` to wrap or don't wrap lines
   - `textwidth`, `tw` (at what line does the text wrap, default to `SCI_GETEDGECOLUMN`)
   - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
   - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
+  - `fileencoding`, `fenc` to support file encoding like UTF-8
+  - `spell` and `nospell` to enable or disable the spelling check
+  - `spelllang` to set the spelling language
 
 The `wrap` items need some work. This is a global setting in Notepad++ and
 it needs to be preserved when switching between files.
+
+The [DSpellCheck plugin](https://github.com/Predelnik/DSpellCheck) first needs to have
+[an API](https://github.com/Predelnik/DSpellCheck/issues/309) to support the spell check
+related properties.
 
 
 Wish List
