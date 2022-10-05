@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plugin_dll_x32
-          path: ${{ matrix.build_platform }}/${{ matrix.build_configuration }}/NppFileSettings.dll
+          path: ${{ matrix.build_configuration }}/NppFileSettings.dll
