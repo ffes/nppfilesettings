@@ -26,7 +26,7 @@ Planned
 
 * Support more VIM modelines items, if possible
   - `wrap` and `nowrap` to wrap or don't wrap lines
-  - `textwidth`, `tw` (at what line does the text wrap, default to `SCI_GETEDGECOLUMN`)
+  - `textwidth`, `tw` (at what column does the text wrap, default to `SCI_GETEDGECOLUMN`)
   - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
   - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
   - `spell` and `nospell` to enable or disable the spelling check
@@ -74,7 +74,7 @@ Caveats
   something doesn't mean it is valid for `vim`. So when you add a modeline
   be sure to check its syntax with the real thing.
 
-* If your vim doesn't recognize the modelines, you probably need to enable it.
+* If your `vim` doesn't recognize the modelines, you probably need to enable it.
   Add these lines to `~/.vimrc`:
 
   ```vim
