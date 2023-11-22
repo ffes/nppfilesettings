@@ -88,7 +88,9 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 	if (lang == "fortran")			return L_FORTRAN;
 	//L_FORTRAN_77
 	//L_FREEBASIC
+	//L_GDSCRIPT
 	if (lang == "haskell")			return L_HASKELL;
+	if (lang == "hollywood")		return L_HOLLYWOOD;
 	if (lang == "html")				return L_HTML;
 	if (lang == "xhtml")			return L_HTML;
 	//L_IHEX
@@ -98,6 +100,7 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 	//L_JS
 	if (lang == "javascript")		return L_JAVASCRIPT;
 	if (lang == "json")				return L_JSON;
+	//L_JSON5
 	if (lang == "jsp")				return L_JSP;
 	if (lang == "kix")				return L_KIX;
 	//L_LATEX
@@ -106,6 +109,7 @@ LangType FileSettingsVim::VimLangToNppLang(std::string lang)
 	if (lang == "make")				return L_MAKEFILE;
 	if (lang == "matlab")			return L_MATLAB;
 	if (lang == "mmix")				return L_MMIXAL;
+	//L_MSSQL
 	//L_NIM
 	if (lang == "crontab")			return L_NNCRONTAB;
 	if (lang == "nsis")				return L_NSIS;
