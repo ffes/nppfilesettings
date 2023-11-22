@@ -23,6 +23,7 @@
 #include <regex>
 
 #include "NPP/PluginInterface.h"
+#include "NPP/menuCmdID.h"
 #include "NppFileSettings.h"
 #include "FileSettingsVim.h"
 
@@ -218,12 +219,12 @@ bool FileSettingsVim::FindString(const std::string longvar, const std::string sh
 {
 	using namespace std;
 
-	// Search for (longvar=|shortvar=)(\d+)
+	// Search for (longvar=|shortvar=)(\S+)
 	string r = "(";
 	r += longvar;
 	r += "=|";
 	r += shortvar;
-	r += "=)(\\w+)";
+	r += "=)(\\S+)";
 
 	regex re(r);
 	smatch m;
@@ -271,6 +272,21 @@ bool FileSettingsVim::Parse()
 		const LangType langNPP = VimLangToNppLang(langVIM);
 		if (langNPP != L_EXTERNAL)
 			_msgr->SetLanguage(langNPP);
+	}
+
+	// Set the file encoding, based on
+	// https://vimdoc.sourceforge.net/htmldoc/mbyte.html#mbyte-encoding
+	std::string encoding;
+	if (FindString("fileencoding", "fenc", encoding))
+	{
+		if (encoding == "latin1")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_ANSI);
+		else if (encoding == "utf-8")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_AS_UTF_8);
+		else if (encoding == "utf-16")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_UTF_16BE);
+		else if (encoding == "utf-16le")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_UTF_16LE);
 	}
 
 	return true;

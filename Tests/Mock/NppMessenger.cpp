@@ -26,6 +26,9 @@ NppMessenger::NppMessenger()
 	_tabwidth = 0;
 	_usetabs = false;
 	_lang = L_EXTERNAL;
+	_msg = 0;
+	_lparam = 0;
+	_wparam = 0;
 }
 
 NppMessenger::~NppMessenger()
@@ -45,4 +48,22 @@ void NppMessenger::SetUseTabs(bool usetabs)
 void NppMessenger::SetLanguage(LangType lang)
 {
 	_lang = lang;
+}
+
+LRESULT NppMessenger::SendNppMsg(UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	_msg = msg;
+	_wparam = wparam;
+	_lparam = lparam;
+
+	return ERROR_SUCCESS;
+}
+
+LRESULT NppMessenger::SendSciMsg(UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	_msg = msg;
+	_wparam = wparam;
+	_lparam = lparam;
+
+	return ERROR_SUCCESS;
 }

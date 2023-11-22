@@ -1,5 +1,6 @@
 #include <catch2/catch.hpp>
 #include "../NPP/PluginInterface.h"
+#include "../NPP/menuCmdID.h"
 #include "../FileSettingsVim.h"
 #include "Mock/NppMessenger.h"
 
@@ -95,6 +96,28 @@ TEST_CASE("Vim::Parse(), et ts=6")
 	REQUIRE(res == true);
 	REQUIRE(msgr._usetabs == false);
 	REQUIRE(msgr._tabwidth == 6);
+}
+
+TEST_CASE("Vim::Parse(), fileencoding=utf-16")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: fileencoding=utf-16");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
+	REQUIRE(msgr._lparam == IDM_FORMAT_CONV2_UTF_16BE);
+}
+
+TEST_CASE("Vim::Parse(), fenc=utf-8")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: fenc=utf-8");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
+	REQUIRE(msgr._lparam == IDM_FORMAT_CONV2_AS_UTF_8);
 }
 
 TEST_CASE("Vim::Parse(), empty line")

@@ -32,8 +32,13 @@ public:
 	void		SetTabWidth(int width);
 	void		SetUseTabs(bool usetabs);
 	void		SetLanguage(LangType lang);
+	LRESULT 	SendNppMsg(UINT msg, WPARAM wparam = 0, LPARAM lparam = 0);
+	LRESULT		SendSciMsg(UINT msg, WPARAM wparam = 0, LPARAM lparam = 0);
 
 	int			_tabwidth;
 	bool		_usetabs;
 	LangType	_lang;
+	UINT		_msg;
+	WPARAM		_wparam;
+	LPARAM		_lparam;
 };

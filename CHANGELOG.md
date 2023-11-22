@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## Version 2.1.0 (YYYY-MM-DD)
+
+- Add support for vim option `fileencoding` with values `latin1`, `utf-8`, `utf-16` and `utf-16le`.
+
+
 ## Version 2.0.0 (2022-11-21)
 
 - Removed first line recognition, because that is in Notepad++ itself and renamed therefore the plugin to NppFileSettings

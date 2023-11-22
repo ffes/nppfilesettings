@@ -14,6 +14,11 @@ Currently supported
 - `expandtab`, `et`: tab key produces spaces
 - `noexpandtab`, `noet`: tab key produces tabs
 - `filetype`, `ft`, `syntax`, `syn`: specify the syntax highlighting used for the file
+- `fileencoding`, `fenc`: support the following file encoding, based on the [vim docs](https://vimdoc.sourceforge.net/htmldoc/mbyte.html#mbyte-encoding)
+  - `latin1`
+  - `utf-8`
+  - `utf-16`
+  - `utf-16le`
 
 
 Planned
@@ -24,7 +29,6 @@ Planned
   - `textwidth`, `tw` (at what line does the text wrap, default to `SCI_GETEDGECOLUMN`)
   - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
   - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
-  - `fileencoding`, `fenc` to support file encoding like UTF-8
   - `spell` and `nospell` to enable or disable the spelling check
   - `spelllang` to set the spelling language
 
