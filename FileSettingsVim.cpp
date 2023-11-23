@@ -283,11 +283,11 @@ bool FileSettingsVim::Parse()
 	if (FindString("fileformat", "ff", lineEnding))
 	{
 		if (lineEnding == "unix")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TOUNIX);
+			_msgr->MenuCommand(IDM_FORMAT_TOUNIX);
 		else if (lineEnding == "dos")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TODOS);
+			_msgr->MenuCommand(IDM_FORMAT_TODOS);
 		else if (lineEnding == "mac")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TOMAC);
+			_msgr->MenuCommand(IDM_FORMAT_TOMAC);
 	}
 
 	// Set the file encoding, based on
@@ -296,13 +296,13 @@ bool FileSettingsVim::Parse()
 	if (FindString("fileencoding", "fenc", encoding))
 	{
 		if (encoding == "latin1")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_ANSI);
+			_msgr->MenuCommand(IDM_FORMAT_CONV2_ANSI);
 		else if (encoding == "utf-8")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_AS_UTF_8);
+			_msgr->MenuCommand(IDM_FORMAT_CONV2_AS_UTF_8);
 		else if (encoding == "utf-16")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_UTF_16BE);
+			_msgr->MenuCommand(IDM_FORMAT_CONV2_UTF_16BE);
 		else if (encoding == "utf-16le")
-			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_CONV2_UTF_16LE);
+			_msgr->MenuCommand(IDM_FORMAT_CONV2_UTF_16LE);
 	}
 
 	return true;

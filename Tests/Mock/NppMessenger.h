@@ -34,6 +34,7 @@ public:
 	void		SetLanguage(LangType lang);
 	LRESULT 	SendNppMsg(UINT msg, WPARAM wparam = 0, LPARAM lparam = 0);
 	LRESULT		SendSciMsg(UINT msg, WPARAM wparam = 0, LPARAM lparam = 0);
+	void		MenuCommand(UINT msg);
 
 	int			_tabwidth;
 	bool		_usetabs;

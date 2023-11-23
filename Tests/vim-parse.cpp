@@ -105,8 +105,7 @@ TEST_CASE("Vim::Parse(), fileformat=dos")
 
 	const bool res = vim.Parse();
 	REQUIRE(res == true);
-	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
-	REQUIRE(msgr._lparam == IDM_FORMAT_TODOS);
+	REQUIRE(msgr._msg == IDM_FORMAT_TODOS);
 }
 
 TEST_CASE("Vim::Parse(), ff=unix")
@@ -116,8 +115,7 @@ TEST_CASE("Vim::Parse(), ff=unix")
 
 	const bool res = vim.Parse();
 	REQUIRE(res == true);
-	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
-	REQUIRE(msgr._lparam == IDM_FORMAT_TOUNIX);
+	REQUIRE(msgr._msg == IDM_FORMAT_TOUNIX);
 }
 
 TEST_CASE("Vim::Parse(), fileencoding=utf-16")
@@ -127,8 +125,7 @@ TEST_CASE("Vim::Parse(), fileencoding=utf-16")
 
 	const bool res = vim.Parse();
 	REQUIRE(res == true);
-	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
-	REQUIRE(msgr._lparam == IDM_FORMAT_CONV2_UTF_16BE);
+	REQUIRE(msgr._msg == IDM_FORMAT_CONV2_UTF_16BE);
 }
 
 TEST_CASE("Vim::Parse(), fenc=utf-8")
@@ -138,8 +135,7 @@ TEST_CASE("Vim::Parse(), fenc=utf-8")
 
 	const bool res = vim.Parse();
 	REQUIRE(res == true);
-	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
-	REQUIRE(msgr._lparam == IDM_FORMAT_CONV2_AS_UTF_8);
+	REQUIRE(msgr._msg == IDM_FORMAT_CONV2_AS_UTF_8);
 }
 
 TEST_CASE("Vim::Parse(), empty line")

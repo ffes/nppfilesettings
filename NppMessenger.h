@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppMessenger v1.0.0                                                    //
-//  Copyright (c) 2019-2022 Frank Fesevur                                  //
+//  NppMessenger v1.1.0                                                    //
+//  Copyright (c) 2019-2023 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -53,8 +53,14 @@ public:
 	void	SetUseTabs(bool usetabs) const noexcept;
 	void	SetLanguage(LangType lang) const noexcept;
 
+	void	ReplaceSelection(const std::string txt) const noexcept;
+
 	COLORREF GetEditorDefaultForegroundColor() const noexcept;
 	COLORREF GetEditorDefaultBackgroundColor() const noexcept;
+
+	void	BeginUndoAction() const noexcept;
+	void	EndUndoAction() const noexcept;
+	void 	MenuCommand(const UINT msg) const noexcept;
 
 protected:
 	NppData m_nppData;

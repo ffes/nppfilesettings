@@ -67,3 +67,8 @@ LRESULT NppMessenger::SendSciMsg(UINT msg, WPARAM wparam, LPARAM lparam)
 
 	return ERROR_SUCCESS;
 }
+
+void NppMessenger::MenuCommand(UINT msg)
+{
+	_msg = msg;
+}

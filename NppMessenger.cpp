@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
-//  NppMessenger v1.0.0                                                    //
-//  Copyright (c) 2019-2022 Frank Fesevur                                  //
+//  NppMessenger v1.1.0                                                    //
+//  Copyright (c) 2019-2023 Frank Fesevur                                  //
 //                                                                         //
 //  This program is free software; you can redistribute it and/or modify   //
 //  it under the terms of the GNU General Public License as published by   //
@@ -134,7 +134,6 @@ int NppMessenger::GetLine(const int line, char* textbuf) const noexcept
  *
  *  @details More details
  */
-
 int NppMessenger::GetCurrentPos() const noexcept
 {
 	return (int) SendSciMsg(SCI_GETCURRENTPOS);
@@ -147,7 +146,6 @@ int NppMessenger::GetCurrentPos() const noexcept
  *
  *  @details More details
  */
-
 void NppMessenger::SetSelectionStart(const int start) const noexcept
 {
 	SendSciMsg(SCI_SETSELECTIONSTART, start);
@@ -160,7 +158,6 @@ void NppMessenger::SetSelectionStart(const int start) const noexcept
  *
  *  @details More details
  */
-
 void NppMessenger::SetSelectionEnd(const int end) const noexcept
 {
 	SendSciMsg(SCI_SETSELECTIONEND, end);
@@ -286,7 +283,6 @@ LangType NppMessenger::GetLanguage() const noexcept
  *
  *  @details More details
  */
-
 COLORREF NppMessenger::GetEditorDefaultForegroundColor() const noexcept
 {
 	return (COLORREF) SendNppMsg(NPPM_GETEDITORDEFAULTFOREGROUNDCOLOR);
@@ -299,8 +295,49 @@ COLORREF NppMessenger::GetEditorDefaultForegroundColor() const noexcept
  *
  *  @details More details
  */
-
 COLORREF NppMessenger::GetEditorDefaultBackgroundColor() const noexcept
 {
 	return (COLORREF) SendNppMsg(NPPM_GETEDITORDEFAULTBACKGROUNDCOLOR);
+}
+
+/**
+ *  @brief Brief description
+ *
+ *  @details More details
+ */
+void NppMessenger::BeginUndoAction() const noexcept
+{
+	SendSciMsg(SCI_BEGINUNDOACTION);
+}
+
+/**
+ *  @brief Brief description
+ *
+ *  @details More details
+ */
+void NppMessenger::EndUndoAction() const noexcept
+{
+	SendSciMsg(SCI_ENDUNDOACTION);
+}
+
+/**
+ *  @brief Brief description
+ *
+ *  @param [in] param Description for param
+ *
+ *  @details More details
+ */
+void NppMessenger::MenuCommand(const UINT msg) const noexcept
+{
+	SendNppMsg(NPPM_MENUCOMMAND, 0, msg);
+}
+
+/**
+ *  @brief Brief description
+ *
+ *  @param [in] param Description for param
+ */
+void NppMessenger::ReplaceSelection(const std::string txt) const noexcept
+{
+	SendSciMsg(SCI_REPLACESEL, 0, (LPARAM) txt.c_str());
 }
