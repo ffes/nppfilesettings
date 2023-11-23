@@ -278,6 +278,18 @@ bool FileSettingsVim::Parse()
 			_msgr->SetLanguage(langNPP);
 	}
 
+	// Search for fileformat to set the line endings
+	std::string lineEnding;
+	if (FindString("fileformat", "ff", lineEnding))
+	{
+		if (lineEnding == "unix")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TOUNIX);
+		else if (lineEnding == "dos")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TODOS);
+		else if (lineEnding == "mac")
+			_msgr->SendNppMsg(NPPM_MENUCOMMAND, 0, IDM_FORMAT_TOMAC);
+	}
+
 	// Set the file encoding, based on
 	// https://vimdoc.sourceforge.net/htmldoc/mbyte.html#mbyte-encoding
 	std::string encoding;

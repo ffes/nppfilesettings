@@ -14,6 +14,7 @@ Currently supported
 - `expandtab`, `et`: tab key produces spaces
 - `noexpandtab`, `noet`: tab key produces tabs
 - `filetype`, `ft`, `syntax`, `syn`: specify the syntax highlighting used for the file
+- `fileformat`, `ff`: force the line ending to `unix`, `dos` or `mac`.
 - `fileencoding`, `fenc`: support the following file encoding, based on the [vim docs](https://vimdoc.sourceforge.net/htmldoc/mbyte.html#mbyte-encoding)
   - `latin1`
   - `utf-8`
@@ -28,7 +29,6 @@ Planned
   - `wrap` and `nowrap` to wrap or don't wrap lines
   - `textwidth`, `tw` (at what column does the text wrap, default to `SCI_GETEDGECOLUMN`)
   - `shiftwidth`, `sw` can probably be mapped to `SCI_SETINDENT`
-  - `fileformat`, `ff` can probably be mapped to `SCI_SETEOLMODE`
   - `spell` and `nospell` to enable or disable the spelling check
   - `spelllang` to set the spelling language
 

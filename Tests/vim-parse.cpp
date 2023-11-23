@@ -98,6 +98,28 @@ TEST_CASE("Vim::Parse(), et ts=6")
 	REQUIRE(msgr._tabwidth == 6);
 }
 
+TEST_CASE("Vim::Parse(), fileformat=dos")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: fileformat=dos");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
+	REQUIRE(msgr._lparam == IDM_FORMAT_TODOS);
+}
+
+TEST_CASE("Vim::Parse(), ff=unix")
+{
+	NppMessenger msgr;
+	FileSettingsVim vim(&msgr, "# vim: ff=unix");
+
+	const bool res = vim.Parse();
+	REQUIRE(res == true);
+	REQUIRE(msgr._msg == NPPM_MENUCOMMAND);
+	REQUIRE(msgr._lparam == IDM_FORMAT_TOUNIX);
+}
+
 TEST_CASE("Vim::Parse(), fileencoding=utf-16")
 {
 	NppMessenger msgr;
